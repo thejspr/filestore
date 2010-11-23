@@ -1,0 +1,6 @@
+!#/bin/bash
+
+sudo chmod -R +x *
+sudo chmod -R 777 assets/
+sudo chmod -R 777 protected/runtime/
+sudo chmod -R 777 protected/data/f/

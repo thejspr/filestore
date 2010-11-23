@@ -1,0 +1,166 @@
+ /* General layout */
+body {
+    font-size:95%;
+    color:#222;
+    background:#fff;
+    font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #347498;
+}
+a:hover {
+    color: #275772;
+}
+h1, h2, h3 {
+    font-weight:normal;
+    color:#111;
+}
+h1 {
+    font-size:2.2em;
+    line-height:1;
+    margin-bottom:0.5em;
+}
+h2 {
+    font-size:2em;
+    margin-bottom:0.75em;
+}
+h3 {
+    font-size:1.5em;
+    line-height:1;
+    margin-bottom:1em;
+}
+/* Various div's */
+.centered {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+/* submenu links */
+.sublinks {
+    margin-top: 30px;
+    float: right;
+    font-size: 90%;
+}
+.sublinks a {
+    font-weight: bold;
+}
+.sublinks ul li {
+    float: left;
+    margin-right: 10px;
+    padding-right: 10px;
+    list-style: none;
+}
+.sublinks ul li a {
+    display: block;
+    padding: 1px 0;
+    text-decoration: none;
+}
+.sublinks ul a:hover {
+    color: #000;
+}
+.sublinks ul .last {
+    border: none;
+    margin-right: 0px;
+    padding-right: 10px;
+}
+.sublinks ul .on a {
+    color: #000;
+    font-weight: bold;
+    cursor: default;
+}
+.sublinks ul .on a:hover {
+    color: #000;
+}
+.clearfix, .last {
+    display: block;
+    margin-right: 0px;
+    padding-right: 0px;
+}
+/* Tables */
+.detail-view {
+    width: 400px;
+}
+/* other stuff */
+#item-list li {
+    list-style-image:none;
+    list-style-type:none;
+    margin: 0;
+    padding: 0;
+    padding-bottom:8px;
+}
+#folder-list img {
+    vertical-align:text-top;
+    padding-right: 5px;
+}
+.file-image {
+    float:right;
+    width: 310px;
+}
+.file-image img {
+    max-height: 300px;
+    max-width: 300px;
+}
+.done {
+    text-decoration: line-through;
+}
+/* forms */
+label {
+    font-weight:bold;
+}
+input[type=text], input[type=password], input.text, textarea {
+    background-color:#fff;
+    border:1px solid #bbb;
+}
+input[type=text]:focus, input[type=password]:focus, input.text:focus, textarea:focus {
+    border-color:#666;
+}
+select {
+    background-color:#fff;
+    border-width:1px;
+    border-style:solid;
+}
+input[type=text], input[type=password], input.text, textarea, select {
+    margin:0.5em 0;
+}
+input {
+    width: 200px;
+    padding: 5px;
+}    
+textarea {
+    width:390px;
+    height:250px;
+    padding:5px;
+}
+.row {
+    padding:5px;
+ }
+.error {
+    background:#fbe3e4;
+    color:#8a1f11;
+    border-color:#fbc2c4;
+}
+.errorMessage {
+    color:#8a1f11;
+ }
+.success {
+    background:#e6efc2;
+    color:#264409;
+    border-color:#c6d880;
+}
+.info {
+    background:#d5edf8;
+    color:#205791;
+    border-color:#92cae4;
+}
+.error a, .alert a {
+    color:#8a1f11;
+}
+.success a {
+    color:#264409;
+}
+.info a {
+    color:#205791;
+}
+
