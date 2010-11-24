@@ -11,3 +11,19 @@
         <li>Stylesheet that makes the site more accessible in mobile browsers</li>
     </ul>
 </div>
+<br/><br/>
+<?
+$file_path = "changelog.log";
+if (file_exists($file_path)) {
+    $file = fopen($file_path, 'r');
+    
+    while(!feof($file)) {
+      echo fgets($file). "<br />";
+    }
+
+    fclose($file);
+
+} else {
+    echo "<i>Changelog not available</i>";
+}
+?>

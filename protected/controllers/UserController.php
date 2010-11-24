@@ -76,11 +76,11 @@ class UserController extends Controller
 			if($model->save()) {
 				// make folder in database.
  				$folder=new Folder;
-				$folder->folder_name = 'My Folder';
+				$folder->folder_name = 'root';
 				$folder->owner_id = $model->id;
 				$folder->save();
 				// create folder on disk
-				mkdir(Yii::app()->params['filesPath'].$folder->id);
+				mkdir(Yii::app()->params['filesPath'].'/'.Yii::app()->user->id.'/'.$model->id);
 
 				$this->redirect(array('view','id'=>$model->id));
 			}

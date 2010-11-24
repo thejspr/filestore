@@ -56,7 +56,7 @@ class FolderController extends Controller
                 'files'=>$files
             ));
         } else {
-            throw new CHttpException(403,'You cannot access other users files unless they share them with you.');
+            throw new CHttpException(403,'You cannot access other users files unless they share them with you or make them public.');
         }
 	}
 
@@ -74,7 +74,7 @@ class FolderController extends Controller
 			$model->owner_id = Yii::app()->user->id;
 			
 			if($model->save())
-                mkdir(Yii::app()->params['filesPath'].$model->id);
+                mkdir(Yii::app()->params['filesPath'].'/'.Yii::app()->user->id.'/'.$model->id);
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
@@ -134,27 +134,12 @@ class FolderController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$models = Folder::model()->findAll('owner_id = :owner_id', array(':owner_id'=>Yii::app()->user->id));
+		$models = Folder::model()->findAll('owner_id = :owner_id AND folder_name != "root"', array(':owner_id'=>Yii::app()->user->id));
 		$this->render('index',array(
 			'models'=>$models,
 		));
 	}
 
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
-		$model=new Folder('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Folder']))
-			$model->attributes=$_GET['Folder'];
-
-		$this->render('admin',array(
-			'model'=>$model,
-		));
-	}
-    
     private function getFiles($folder_id)
     {
         $files = File::model()->findAll('folder_id = :folder_id',array(':folder_id'=>$folder_id));
@@ -164,13 +149,13 @@ class FolderController extends Controller
     private function deleteFolder($folder)
     {
         if($folder->owner_id == Yii::app()->user->id) {
-            $directory_path = Yii::app()->params['filesPath'].$folder->id;
+            $directory_path = Yii::app()->params['filesPath'].'/'.Yii::app()->user->id.'/'.$folder->id;
             // get files in folder
             $files_in_folder = File::model()->findAll('folder_id = :fid',array(':fid'=>$folder->id));
             // delete each of those files both in database and on disk
             foreach ($files_in_folder as $file) {
                 $file->delete();
-                $file_path = $directory_path.DIRECTORY_SEPARATOR.$file->file_name;
+                $file_path = $directory_path.'/'.$file->file_name;
                 if (is_file($file_path))
                     unlink($file_path);
             }

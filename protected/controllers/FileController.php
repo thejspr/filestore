@@ -77,7 +77,7 @@ class FileController extends Controller
             $model->owner_id = Yii::app()->user->id;
 			$model->created = time();
             $model->folder_id = $_POST['File']['folder_id'];
-			$path = Yii::app()->params['filesPath'].$model->folder_id.'/';
+			$path = Yii::app()->params['filesPath'].'/'.Yii::app()->user->id.'/'.$model->folder_id.'/';
 
 			if($model->save()) {
 				$file->saveAs($path.$model->file_name);
@@ -146,21 +146,6 @@ class FileController extends Controller
 	}
 
 	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
-		$model=new File('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['File']))
-			$model->attributes=$_GET['File'];
-
-		$this->render('admin',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer the ID of the model to be loaded
@@ -173,6 +158,7 @@ class FileController extends Controller
 		return $model;
 	}
 
+    /* Checks wether a file ends with a known image extension */
     public function isImage($file){
         $extension = explode('.', $file->file_name);
         $extension = strtolower($extension[sizeof($extension)-1]);

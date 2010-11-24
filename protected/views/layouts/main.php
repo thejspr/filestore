@@ -39,6 +39,7 @@
 
 	<div id="footer">
         &copy; <?= date('Y')?> Jesper Kjeldgaard
+        <span style="color:#999;float:right;">Yii v.<?= Yii::getVersion() ?></span>
 	</div><!-- footer -->
 
 </div><!-- container -->

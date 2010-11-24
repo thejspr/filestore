@@ -43,7 +43,7 @@ class User extends CActiveRecord
 			array('username, email', 'required', 'on'=>'register, update'),
 			array('username, email', 'unique'),
 			array('username', 'length', 'max'=>20, 'min'=>1),
-			//array('email','email'),
+			array('email','email'),
 			array('password', 'required', 'on'=>'register, login'),
 			array('password', 'length', 'max'=>30, 'min'=>1),
 			array('password_confirmation', 'required', 'on'=>'register'),
@@ -52,7 +52,7 @@ class User extends CActiveRecord
 			array('password, password_confirmation, email', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, username, email', 'safe', 'on'=>'search'),
+			array('username, email', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -97,7 +97,6 @@ class User extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('email',$this->email,true);
 
