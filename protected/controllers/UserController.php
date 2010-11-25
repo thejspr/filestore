@@ -75,12 +75,13 @@ class UserController extends Controller
 
 			if($model->save()) {
 				// make folder in database.
- 				$folder=new Folder;
-				$folder->folder_name = 'root';
+                $folder = new Folder;
+                $folder->folder_name = 'root';
+				$folder->is_root = 1;
 				$folder->owner_id = $model->id;
 				$folder->save();
 				// create folder on disk
-				mkdir(Yii::app()->params['filesPath'].'/'.Yii::app()->user->id.'/'.$model->id);
+				mkdir(Yii::app()->params['filesPath'].'/'.$model->id);
 
 				$this->redirect(array('view','id'=>$model->id));
 			}
@@ -129,6 +130,19 @@ class UserController extends Controller
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
+            // remove all folders and files
+            $folders = Folder::model()->findAll('owner_id = :oid AND is_root = 0', array(':oid'=>$id));
+
+            foreach ($folders as $folder) {
+                $folder->deleteOnDisk();
+                $folder->delete();
+            }
+
+            // remove root folder
+            $root_folder = Folder::model()->find('owner_id = :oid AND is_root = 1', array(':oid'=>$id));
+            $root_folder->deleteOnDisk();
+            $root_folder->delete();
+
 			// we only allow deletion via POST request
 			$this->loadModel(Yii::app()->user->id)->delete();
 

@@ -119,7 +119,7 @@ class FolderController extends Controller
 			// we only allow deletion via POST request
 			$folder = $this->loadModel($id);
             // delete folder and containging files
-            $this->deleteFolder($folder);
+            $folder->deleteOnDisk();
             // remove model from database
             $folder->delete();
 			
@@ -144,28 +144,6 @@ class FolderController extends Controller
     {
         $files = File::model()->findAll('folder_id = :folder_id',array(':folder_id'=>$folder_id));
         return $files;
-    }
-
-    private function deleteFolder($folder)
-    {
-        if($folder->owner_id == Yii::app()->user->id) {
-            $directory_path = Yii::app()->params['filesPath'].'/'.Yii::app()->user->id.'/'.$folder->id;
-            // get files in folder
-            $files_in_folder = File::model()->findAll('folder_id = :fid',array(':fid'=>$folder->id));
-            // delete each of those files both in database and on disk
-            foreach ($files_in_folder as $file) {
-                $file->delete();
-                $file_path = $directory_path.'/'.$file->file_name;
-                if (is_file($file_path))
-                    unlink($file_path);
-            }
-            // remove directory once it is emtpy
-            if (is_dir($directory_path))
-                rmdir($directory_path);
-        } else {
-            throw new CHttpException(403,'You may not delete other users folders!');
-        }
-
     }
 
 	/**

@@ -7,7 +7,7 @@
         <li class="done">view images</li>
         <li>login with facebook</li>
         <li>Drag/drop upload</li>
-        <li>Delete all files and folders when profile deletion</li>
+        <li class="done">Delete all files and folders when profile deletion</li>
         <li>Stylesheet that makes the site more accessible in mobile browsers</li>
     </ul>
 </div>
