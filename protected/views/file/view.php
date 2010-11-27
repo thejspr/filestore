@@ -7,12 +7,14 @@ $this->menu=array(
 );
 ?>
 
-<h2>View File: <?php echo $model->file_name; ?></h2>
+<h2><img src="<?= File::model()->getIcon($model->file_name) ?>" alt="file" /> <?php echo $model->file_name; ?></h2>
 
 <? if ($this->isImage($model)){ ?>
     <div class="file-image">
-        <img src="<?= Yii::app()->params['filesPath'].$model->folder_id.'/'.$model->file_name ?>"
-             alt="<?= $model->file_name ?>" />
+        <a href="<?= Yii::app()->params['filesPath'].Yii::app()->user->id.'/'.$model->file_name?>">
+        <img src="<?= Yii::app()->params['filesPath'].Yii::app()->user->id.'/'.$model->file_name ?>"
+             alt="<?= $model->file_name ?>" title="Click to download"/>
+        </a>
     </div>
 <? } ?>
 
@@ -30,4 +32,7 @@ $this->menu=array(
 <br />
 <b>Last edit:</b><br />
 <?= $model->last_edit == 0 ? "Never edited" : date(Yii::app()->params['time_long'],$model->last_edit) ?>
-<br />
+<br /><br />
+<a href="<?= Yii::app()->params['filesPath'].Yii::app()->user->id.'/'.$model->file_name?>">
+    <img class="dl-image" src="images/save-file.jpg" alt="download file" title="Download"/>
+</a>

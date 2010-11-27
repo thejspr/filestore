@@ -96,9 +96,12 @@ class Folder extends CActiveRecord
     {
         if($this->owner_id == Yii::app()->user->id) {
 
-            $directory_path = Yii::app()->params['filesPath'].'/'.Yii::app()->user->id.'/'.$this->id;
+            // set directory path
+            $directory_path = Yii::app()->params['filesPath'].'/'.Yii::app()->user->id;
+
             // get files in folder
             $files_in_folder = File::model()->findAll('folder_id = :fid', array(':fid'=>$this->id));
+
             // delete each of those files both in database and on disk
             foreach ($files_in_folder as $file) {
                 $file_path = $directory_path.'/'.$file->file_name;
@@ -106,12 +109,6 @@ class Folder extends CActiveRecord
                     unlink($file_path);
                 $file->delete();
             }
-            // remove directory once it is emtpy
-            if ($this->is_root == 1)
-                $directory_path = Yii::app()->params['filesPath'].'/'.Yii::app()->user->id;
-
-            if (is_dir($directory_path))
-                rmdir($directory_path);
         } else {
             throw new CHttpException(403,'You may not delete other users folders!');
         }

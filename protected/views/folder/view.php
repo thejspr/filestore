@@ -14,7 +14,7 @@ $this->menu=array(
     <?foreach ($files as $file) { ?>
         <tr>
             <td>
-                <img src="images/icons/page.png" alt="file" />&nbsp;&nbsp;
+                <img src="<?= File::model()->getIcon($file->file_name) ?>" alt="file" />&nbsp;&nbsp;
                 <?= CHtml::link($file->file_name, $this->createUrl('file/view', array('id'=>$file->id))) ?>
             </td>
         </tr>

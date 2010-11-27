@@ -27,12 +27,8 @@ class FolderController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index', 'view', 'create','update','delete'),
+				'actions'=>array('index','view','create','update','delete','files'),
 				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin'),
-				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -74,7 +70,6 @@ class FolderController extends Controller
 			$model->owner_id = Yii::app()->user->id;
 			
 			if($model->save())
-                mkdir(Yii::app()->params['filesPath'].'/'.Yii::app()->user->id.'/'.$model->id);
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
@@ -134,15 +129,39 @@ class FolderController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$models = Folder::model()->findAll('owner_id = :owner_id AND folder_name != "root"', array(':owner_id'=>Yii::app()->user->id));
-		$this->render('index',array(
-			'models'=>$models,
+        $uid = Yii::app()->user->id;
+        // get all users folders
+		$folders = Folder::model()->findAll('owner_id = :owner_id AND folder_name != "root"',
+                array(':owner_id'=>$uid));
+		// get his specific root folder
+        $root_folder = Folder::model()->find('owner_id = :owner_id AND folder_name = "root"',
+                array(':owner_id'=>$uid));
+        // get the files inside the root folder
+        $root_files = File::model()->findAll('owner_id = :owner_id AND folder_id = :folder_id',
+                array(':folder_id'=>$root_folder->id,':owner_id'=>$uid));
+
+        $this->render('index',array(
+			'folders'=>$folders,
+            'root_folder'=>$root_folder,
+            'root_files'=>$root_files,
 		));
 	}
 
+    public function actionFiles($id,$odd)
+    {
+        $odd == 'odd' ? $odd = true : $odd = false;
+        $files = File::model()->findAll('folder_id = :folder_id',array(':folder_id'=>$id));
+        
+        $this->renderPartial('files',array(
+            'files'=>$files,
+            'odd'=>$odd,
+		));
+    }
+
     private function getFiles($folder_id)
     {
-        $files = File::model()->findAll('folder_id = :folder_id',array(':folder_id'=>$folder_id));
+        $files = File::model()->findAll('folder_id = :folder_id',
+                array(':folder_id'=>$folder_id));
         return $files;
     }
 

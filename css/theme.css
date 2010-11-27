@@ -83,15 +83,21 @@ h3 {
     width: 400px;
 }
 /* other stuff */
-#item-list li {
-    list-style-image:none;
-    list-style-type:none;
-    margin: 0;
-    padding: 0;
-    padding-bottom:8px;
+.item-list {
 }
-#folder-list img {
+.item-list .odd {
+    background-color: #E6F2FF;
+}
+.item-list img {
     vertical-align:text-top;
+    padding-right: 5px;
+}
+.nested {
+    padding-left:25px;
+}
+.expand-folder a {
+    text-align: right;
+    font-weight: bold;
     padding-right: 5px;
 }
 .file-image {
@@ -101,6 +107,9 @@ h3 {
 .file-image img {
     max-height: 300px;
     max-width: 300px;
+}
+.dl-image {
+    width: 100px;
 }
 .done {
     text-decoration: line-through;
