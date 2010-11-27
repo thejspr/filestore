@@ -77,7 +77,7 @@ class FileController extends Controller
             $model->owner_id = Yii::app()->user->id;
 			$model->created = time();
             $model->folder_id = $_POST['File']['folder_id'];
-			$path = Yii::app()->params['filesPath'].'/'.Yii::app()->user->id.'/'.$model->folder_id.'/';
+			$path = Yii::app()->params['filesPath'].'/'.Yii::app()->user->id.'/';
 
 			if($model->save()) {
 				$file->saveAs($path.$model->file_name);
@@ -125,9 +125,14 @@ class FileController extends Controller
 		{
 			// we only allow deletion via POST request
 			$folder_id=$this->loadModel($id)->folder_id;
-			$this->loadModel($id)->delete();
+			$file = $this->loadModel($id);
+            $file_on_disk = Yii::app()->params['filesPath'].Yii::app()->user->id.'/'.$file->file_name;
+            $file->delete();
+            if(file_exists($file_on_disk))
+                unlink ($file_on_disk);
 
-			$this->redirect($this->createUrl('folder/'.$folder_id));
+
+			$this->redirect($this->createUrl('folder/view',array('id'=>$folder_id)));
 
 		}
 		else

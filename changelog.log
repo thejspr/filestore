@@ -1,3 +1,15 @@
+v0.6
+====
+5c1def0  Made it possible to view contents of folders on folder index page. Added more diverse icon set. Removed all folder creation from code, except main user folder.
+
+v0.5
+====
+246a6ef  delete user now also deletes all files and folders
+
+v0.4
+====
+280641a  Made all users files and folders go inside a folder with users id as name.
+
 v0.3
 ====
 e435009  x

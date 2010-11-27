@@ -40,7 +40,7 @@ class Folder extends CActiveRecord
 		return array(
 			array('owner_id, folder_name', 'required'),
 			array('owner_id, public', 'numerical', 'integerOnly'=>true),
-			array('folder_name', 'length', 'max'=>128),
+			array('folder_name', 'length', 'max'=>64),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, owner_id, folder_name, public', 'safe', 'on'=>'search'),
@@ -91,4 +91,27 @@ class Folder extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+    public function deleteOnDisk()
+    {
+        if($this->owner_id == Yii::app()->user->id) {
+
+            // set directory path
+            $directory_path = Yii::app()->params['filesPath'].'/'.Yii::app()->user->id;
+
+            // get files in folder
+            $files_in_folder = File::model()->findAll('folder_id = :fid', array(':fid'=>$this->id));
+
+            // delete each of those files both in database and on disk
+            foreach ($files_in_folder as $file) {
+                $file_path = $directory_path.'/'.$file->file_name;
+                if (is_file($file_path))
+                    unlink($file_path);
+                $file->delete();
+            }
+        } else {
+            throw new CHttpException(403,'You may not delete other users folders!');
+        }
+
+    }
 }

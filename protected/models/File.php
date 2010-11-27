@@ -33,6 +33,21 @@ class File extends CActiveRecord
 		return 'tbl_file';
 	}
 
+    public function getIcon($file_name)
+    {
+        $extension = explode('.', $file_name);
+        $extension = strtolower($extension[sizeof($extension)-1]);
+        
+        if(file_exists('images/fileicons/'.$extension.'.png'))
+            $img_path = 'images/fileicons/'.$extension.'.png';
+        elseif(in_array($extension, array('log','ini','conf','js')))
+            $img_path = 'images/fileicons/txt.png';
+        else
+            $img_path = 'images/fileicons/file.png';
+
+        return $img_path;
+    }
+
 	/**
 	 * @return array validation rules for model attributes.
 	 */

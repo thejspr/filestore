@@ -27,12 +27,8 @@ class FolderController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index', 'view', 'create','update','delete'),
+				'actions'=>array('index','view','create','update','delete','files'),
 				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin'),
-				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -74,7 +70,6 @@ class FolderController extends Controller
 			$model->owner_id = Yii::app()->user->id;
 			
 			if($model->save())
-                mkdir(Yii::app()->params['filesPath'].'/'.Yii::app()->user->id.'/'.$model->id);
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
@@ -119,7 +114,7 @@ class FolderController extends Controller
 			// we only allow deletion via POST request
 			$folder = $this->loadModel($id);
             // delete folder and containging files
-            $this->deleteFolder($folder);
+            $folder->deleteOnDisk();
             // remove model from database
             $folder->delete();
 			
@@ -134,38 +129,40 @@ class FolderController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$models = Folder::model()->findAll('owner_id = :owner_id AND folder_name != "root"', array(':owner_id'=>Yii::app()->user->id));
-		$this->render('index',array(
-			'models'=>$models,
+        $uid = Yii::app()->user->id;
+        // get all users folders
+		$folders = Folder::model()->findAll('owner_id = :owner_id AND folder_name != "root"',
+                array(':owner_id'=>$uid));
+		// get his specific root folder
+        $root_folder = Folder::model()->find('owner_id = :owner_id AND folder_name = "root"',
+                array(':owner_id'=>$uid));
+        // get the files inside the root folder
+        $root_files = File::model()->findAll('owner_id = :owner_id AND folder_id = :folder_id',
+                array(':folder_id'=>$root_folder->id,':owner_id'=>$uid));
+
+        $this->render('index',array(
+			'folders'=>$folders,
+            'root_folder'=>$root_folder,
+            'root_files'=>$root_files,
 		));
 	}
 
-    private function getFiles($folder_id)
+    public function actionFiles($id,$odd)
     {
-        $files = File::model()->findAll('folder_id = :folder_id',array(':folder_id'=>$folder_id));
-        return $files;
+        $odd == 'odd' ? $odd = true : $odd = false;
+        $files = File::model()->findAll('folder_id = :folder_id',array(':folder_id'=>$id));
+        
+        $this->renderPartial('files',array(
+            'files'=>$files,
+            'odd'=>$odd,
+		));
     }
 
-    private function deleteFolder($folder)
+    private function getFiles($folder_id)
     {
-        if($folder->owner_id == Yii::app()->user->id) {
-            $directory_path = Yii::app()->params['filesPath'].'/'.Yii::app()->user->id.'/'.$folder->id;
-            // get files in folder
-            $files_in_folder = File::model()->findAll('folder_id = :fid',array(':fid'=>$folder->id));
-            // delete each of those files both in database and on disk
-            foreach ($files_in_folder as $file) {
-                $file->delete();
-                $file_path = $directory_path.'/'.$file->file_name;
-                if (is_file($file_path))
-                    unlink($file_path);
-            }
-            // remove directory once it is emtpy
-            if (is_dir($directory_path))
-                rmdir($directory_path);
-        } else {
-            throw new CHttpException(403,'You may not delete other users folders!');
-        }
-
+        $files = File::model()->findAll('folder_id = :folder_id',
+                array(':folder_id'=>$folder_id));
+        return $files;
     }
 
 	/**

@@ -6,6 +6,7 @@
 
 	<?php $bp = Yii::app()->request->baseUrl; // cache basepath ?>
 
+    <script src="js/jquery-1.4.3.min.js" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="<?= $bp ?>/css/layout.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?= $bp ?>/css/theme.css" media="screen" />
 
