@@ -92,6 +92,12 @@ class Folder extends CActiveRecord
 		));
 	}
 
+    public function hasFiles($id) {
+        $files = File::model()->findAll('folder_id = :id', array(':id'=>$id));
+
+        return count($files);
+    }
+
     public function deleteOnDisk()
     {
         if($this->owner_id == Yii::app()->user->id) {
