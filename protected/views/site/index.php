@@ -1,15 +1,14 @@
-<h1>Welcome</h1>
 <? if (Yii::app()->user->isGuest) { ?>
-	<p>
-        Please <?= CHtml::link("register", array("/user/create")) ?> or
-        <?= CHtml::link("login", array("/site/login")) ?> to use FileStore.
-        To learn more about the site go to <?= CHtml::link('here', array('/site/page', 'view'=>'about'))?>.
-    </p>
+    <h1>Welcome</h1>
+    <div class="empty-page">
+            Please <?= CHtml::link("register", array("/user/create")) ?> or
+            <?= CHtml::link("login", array("/site/login")) ?> to use FileStore.<br />
 <? } else { ?>
-	<h3>
-        Hello <b><?= Yii::app()->user->name ?></b>
-    </h3>
-    <p>
-        Use the menu to access and upload files.
-    </p>
+    <h1>Hello <b><?= Yii::app()->user->name ?></b></h1>
+    <div class="empty-page">
+         You can now <?= CHtml::link("upload files", array("/file/create")) ?>,
+        <?= CHtml::link("create folders", array("/folder/create")) ?> or
+        <?= CHtml::link('edit your Profile', array('user/edit','id'=>Yii::app()->user->id)) ?>.<br />
 <? } ?>
+        To learn more about the site go to <?= CHtml::link('here', array('/site/page', 'view'=>'about'))?>.
+    </div>

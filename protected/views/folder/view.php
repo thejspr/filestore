@@ -8,7 +8,7 @@ $this->menu=array(
 ?>
 
 <h1>Files in <b><?php echo $model->folder_name; ?></b></h1>
-<?= $model->public == 1 ? "<em><span style='color:green;'>This folder is public</span></em>" : ""; ?>
+<?= $model->public == 1 ? "<div class='public-msg'>This folder is public and its content is accessible to all users.</div>" : ""; ?>
 <br /><br />
 <table id="folder-list">
     <?foreach ($files as $file) { ?>

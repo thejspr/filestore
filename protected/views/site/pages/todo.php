@@ -1,21 +1,22 @@
 <h2>Todo list</h2>
-
-<p>This is a list of tasks, past and present, for FileStore:</p>
-<div style="margin-left: 50px;">
+<div class="todo-list">
     <ul>
-        <li class="done">view uploaded images</li>
         <li>Login with facebook</li>
+        <li>Rename files</li>
+        <li>Move files between folders</li>
         <li>Share files with specific user</li>
         <li>HTML5 drag'n'drop upload</li>
-        <li class="done">Delete all files and folders on profile deletion</li>
         <li>Stylesheet that makes the site more accessible in mobile browsers</li>
         <li>view and edit text based files</li>
+        <li>List all public files</li>
+        <li>Search files</li>
     </ul>
 </div>
 <br/>
 <h3>Changelog:</h3>
+<div class="changelog">
 <?
-$file_path = "changelog.log";
+$file_path = "changelog";
 if (file_exists($file_path)) {
     $file = fopen($file_path, 'r');
     $first = true;
@@ -34,3 +35,4 @@ if (file_exists($file_path)) {
     echo "<i>Changelog not available</i>";
 }
 ?>
+</div>

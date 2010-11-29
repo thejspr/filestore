@@ -147,14 +147,12 @@ class FolderController extends Controller
 		));
 	}
 
-    public function actionFiles($id,$odd)
+    public function actionFiles($id)
     {
-        $odd == 'odd' ? $odd = true : $odd = false;
         $files = File::model()->findAll('folder_id = :folder_id',array(':folder_id'=>$id));
         
         $this->renderPartial('files',array(
             'files'=>$files,
-            'odd'=>$odd,
 		));
     }
 
