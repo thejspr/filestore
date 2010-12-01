@@ -1,10 +1,11 @@
 <?php
-
-$this->menu=array(
-	array('label'=>'Upload File', 'url'=>array('create')),
-	array('label'=>'Edit File', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete File', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-);
+if (!Yii::app()->user->isGuest) {
+    $this->menu=array(
+        array('label'=>'Upload File', 'url'=>array('create')),
+        array('label'=>'Edit File', 'url'=>array('update', 'id'=>$model->id)),
+        array('label'=>'Delete File', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+    );
+}
 ?>
 
 <h2><img src="<?= File::model()->getIcon($model->file_name) ?>" alt="file" /> <?php echo $model->file_name; ?></h2>
@@ -33,6 +34,6 @@ $this->menu=array(
 <b>Last edit:</b><br />
 <?= $model->last_edit == 0 ? "Never edited" : date(Yii::app()->params['time_long'],$model->last_edit) ?>
 <br /><br />
-<a href="<?= Yii::app()->params['filesPath'].Yii::app()->user->id.'/'.$model->file_name?>">
+<a href="<?= Yii::app()->params['filesPath'].$model->owner_id.'/'.$model->file_name?>">
     <img class="dl-image" src="images/save-file.jpg" alt="download file" title="Download"/>
 </a>

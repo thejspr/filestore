@@ -6,7 +6,7 @@
 
 	<?php $bp = Yii::app()->request->baseUrl; // cache basepath ?>
 
-    <script src="js/jquery-1.4.3.min.js" type="text/javascript"></script>
+    <? Yii::app()->clientScript->registerCoreScript('jquery'); ?>
 	<link rel="stylesheet" type="text/css" href="<?= $bp ?>/css/layout.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?= $bp ?>/css/theme.css" media="screen" />
 
@@ -21,6 +21,7 @@
 				<? if (!Yii::app()->user->isGuest) { ?>
 					<li class="clearfix"><?= CHtml::link('Home', array('/site/index')) ?></li>
 					<li class="clearfix"><?= CHtml::link('My Files', array('/folder/')) ?></li>
+					<li class="clearfix"><?= CHtml::link('Public Files', array('/folder/public')) ?></li>
 					<li class="clearfix"><?= CHtml::link('My Profile', array('user/view','id'=>Yii::app()->user->id)) ?></li>
 					<li class="clearfix"><?= CHtml::link('Todo List', array('site/page', 'view'=>'todo')) ?></li>
 					<li class="clearfix"><?= CHtml::link('About', array('site/page', 'view'=>'about')) ?></li>
@@ -28,6 +29,7 @@
 				<? } else { ?>
 					<li class="clearfix"><?= CHtml::link('Login', array('/site/login'.Yii::app()->user->id)) ?></li>
 					<li class="clearfix"><?= CHtml::link('Register', array('/user/create')) ?></li>
+                    <li class="clearfix"><?= CHtml::link('Public Files', array('/folder/public')) ?></li>
 					<li class="clearfix"><?= CHtml::link('Todo List', array('site/page', 'view'=>'todo')) ?></li>
 					<li class="clearfix last"><?= CHtml::link('About', array('site/page', 'view'=>'about')) ?></li>
 				<? } ?>

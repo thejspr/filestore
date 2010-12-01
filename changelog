@@ -1,3 +1,8 @@
+v0.7
+====
+644418c  Refactored todo page and changelog
+5c38d17  removed log files from repo
+
 v0.6
 ====
 5c1def0  Made it possible to view contents of folders on folder index page. Added more diverse icon set. Removed all folder creation from code, except main user folder.
