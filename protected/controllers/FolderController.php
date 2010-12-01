@@ -26,6 +26,10 @@ class FolderController extends Controller
 	public function accessRules()
 	{
 		return array(
+            array('allow',
+                'actions'=>array('view','public'),
+                'users'=>array('*'),
+            ),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('index','view','create','update','delete','files'),
 				'users'=>array('@'),
@@ -36,12 +40,24 @@ class FolderController extends Controller
 		);
 	}
 
+    public function actionPublic() {
+        $folders = Folder::model()->FindAll('public = 1');
+        $files = File::model()->FindAll('public = 1');
+
+        $this->render('public',array(
+            'folders'=>$folders,
+            'files'=>$files,
+        ));
+    }
+
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
 	public function actionView($id)
 	{
+        // register yii jquery plugin used for file/folder deletion
+        Yii::app()->getClientScript()->registerCoreScript('yii');
         $folder = $this->loadModel($id);
 
         if($folder->owner_id == Yii::app()->user->id || $folder->public == 1) {

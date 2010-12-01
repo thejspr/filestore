@@ -34,10 +34,6 @@ class UserController extends Controller
 				'actions'=>array('view','update','index', 'delete'),
 				'users'=>array('@'),
 			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
@@ -128,6 +124,9 @@ class UserController extends Controller
 	 */
 	public function actionDelete($id)
 	{
+        if(Yii::app()->user->id != $id)
+            throw new CHttpException(403, 'You cannot delete other users\' profiles');
+
 		if(Yii::app()->request->isPostRequest)
 		{
             // remove all folders and files
@@ -163,22 +162,7 @@ class UserController extends Controller
 			'dataProvider'=>$dataProvider,
 		));
 	}
-
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
-		$model=new User('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['User']))
-			$model->attributes=$_GET['User'];
-
-		$this->render('admin',array(
-			'model'=>$model,
-		));
-	}
-
+    
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
