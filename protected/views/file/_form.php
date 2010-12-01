@@ -17,13 +17,19 @@
 		<?php echo $form->dropDownList($model,'folder_id',CHtml::listData($folders, 'id', 'folder_name')); ?>
 		<?php echo $form->error($model,'folder_id'); ?>
 	</div>
-
+    <? if ($model->file_name == "" && $model->created == "") { ?>
 	<div class="row">
 		<?php echo $form->labelEx($model,'File'); ?>
 		<?php echo $form->fileField($model,'file_name'); ?>
 		<?php echo $form->error($model,'file_name'); ?>
 	</div>       
-
+    <? } else { ?>
+	<div class="row">
+		<?php echo $form->labelEx($model,'Filename'); ?>
+		<?php echo $form->textField($model,'file_name'); ?>
+		<?php echo $form->error($model,'file_name'); ?>
+	</div>
+    <? } ?>
 	<div class="row">
 		<?php echo $form->labelEx($model,'public'); ?>
 		<?php echo $form->checkbox($model,'public'); ?>
