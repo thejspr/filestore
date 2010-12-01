@@ -1,0 +1,28 @@
+=======
+v0.7.1
+======
+34e76fa  list all public files done. Rename files done. Public files and folders are now accessible by unregistered users.
+
+v0.7
+====
+644418c  Refactored todo page and changelog
+5c38d17  removed log files from repo
+
+v0.6
+====
+5c1def0  Made it possible to view contents of folders on folder index page. Added more diverse icon set. Removed all folder creation from code, except main user folder.
+
+v0.5
+====
+246a6ef  delete user now also deletes all files and folders
+
+v0.4
+====
+280641a  Made all users files and folders go inside a folder with users id as name.
+
+v0.3
+====
+e435009  x
+5f3b0a7  assets folder again
+2866578  added assets directory
+542945d  going to github2
