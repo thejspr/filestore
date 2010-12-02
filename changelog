@@ -1,4 +1,10 @@
-=======
+v0.8
+====
+20d8378  changelog
+2a31a7d  list all public files done. Rename files done. Public files and folders are now accessible by unregistered users.
+51e6540  list all public files done. Rename files done. Public files and folders are now accessible by unregistered users.
+0ac6c2e  fixed permissions script
+
 v0.7.1
 ======
 34e76fa  list all public files done. Rename files done. Public files and folders are now accessible by unregistered users.
@@ -26,3 +32,4 @@ e435009  x
 5f3b0a7  assets folder again
 2866578  added assets directory
 542945d  going to github2
+

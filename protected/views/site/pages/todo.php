@@ -2,7 +2,6 @@
 <div class="todo-list">
     <ul>
         <li>Login with facebook</li>
-        <li>Share files with specific user</li>
         <li>HTML5 drag'n'drop upload</li>
         <li>Stylesheet that makes the site more accessible in mobile browsers</li>
         <li>view and edit text based files</li>
@@ -33,3 +32,4 @@ if (file_exists($file_path)) {
 }
 ?>
 </div>
+<br />

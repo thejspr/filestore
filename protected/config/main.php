@@ -6,7 +6,7 @@
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 return array(
-	'name'=>'FileStore',
+	'name'=>'FileStorage',
 
 	// preloading 'log' component
 	'preload'=>array('log'),

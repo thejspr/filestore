@@ -24,7 +24,7 @@ class FileController extends Controller
                 'users'=>array('*'),
             ),
 			array('allow', // allow authenticated user to perform these actions
-				'actions'=>array('create','update','delete'),
+				'actions'=>array('create','update','delete','shares'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -32,6 +32,20 @@ class FileController extends Controller
 			),
 		);
 	}
+
+    public function actionShares($id)
+    {
+        // fetch file model from database.
+        $model = $this->loadModel($id);
+
+        // fetch all shares for the current file
+        $shares = FileShare::model()->FindAll('file_id = :fid',array(':fid'=>$id));
+        
+        $this->render('shares',array(
+			'model'=>$model,
+            'shares'=>$shares,
+		));
+    }
 
 	/**
 	 * Displays a particular model.
@@ -44,12 +58,15 @@ class FileController extends Controller
         $folder = Folder::model()->findByPk($model->folder_id);
         // fetch the owner (user) model for the file model data.
         $owner = User::model()->findByPk($model->owner_id);
+        // fetch users that the file is shared with.
+        $shared = FileShare::model()->FindAll('file_id = :fid',array(':fid'=>$id));
 
         //render the view with the fetched data.
         $this->render('view',array(
 			'model'=>$model,
             'folder'=>$folder,
             'owner'=>$owner,
+            'shared'=>$shared,
 		));
 	}
 

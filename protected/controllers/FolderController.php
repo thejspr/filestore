@@ -156,10 +156,18 @@ class FolderController extends Controller
         $root_files = File::model()->findAll('owner_id = :owner_id AND folder_id = :folder_id',
                 array(':folder_id'=>$root_folder->id,':owner_id'=>$uid));
 
+        // get files shared with user
+        $shared = FileShare::model()->FindAll('user_id = :uid',array(':uid'=>Yii::app()->user->id));
+        $sharedFiles = array();
+        foreach ($shared as $share) {
+            $sharedFiles[] = File::model()->findByPk($share->file_id);
+        }
+
         $this->render('index',array(
 			'folders'=>$folders,
             'root_folder'=>$root_folder,
             'root_files'=>$root_files,
+            'shared_files'=>$sharedFiles,
 		));
 	}
 

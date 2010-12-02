@@ -2,7 +2,7 @@
     <h1>Welcome</h1>
     <div class="empty-page">
             Please <?= CHtml::link("register", array("/user/create")) ?> or
-            <?= CHtml::link("login", array("/site/login")) ?> to use FileStore.<br />
+            <?= CHtml::link("login", array("/site/login")) ?> to use FileStorage.<br />
 <? } else { ?>
     <h1>Hello <b><?= Yii::app()->user->name ?></b></h1>
     <div class="empty-page">

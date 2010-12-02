@@ -86,8 +86,8 @@ h3 {
 .item-list {
     width: 400px;
 }
-.item-list .odd {
-    background-color: #E6F2FF;
+.item-list {
+    border-top: 4px solid #347498;
 }
 .item-list img {
     vertical-align:text-top;
@@ -96,17 +96,17 @@ h3 {
 .nested {
     padding-left:25px;
 }
-.expand-folder a {
+.expand-folder img {
     float: right;
     padding: 5px;
 }
 .file-image {
     float:right;
-    width: 310px;
+    width: 510px;
 }
 .file-image img {
-    max-height: 300px;
-    max-width: 300px;
+    max-height: 500px;
+    max-width: 500px;
 }
 .dl-image {
     width: 100px;
@@ -189,4 +189,27 @@ textarea {
 .public-msg {
     color: green;
     font-style: italic;
+}
+/* shares */
+#shares td {
+    padding: 5px;
+}
+#shares th {
+    font-weight: bold;
+    border-bottom: 1px solid #000;
+}
+#shares td.action {
+    text-align: center;
+}
+#shares td.username, #shares th.username {
+    width: 300px;
+}
+#shares th.action, #shares td.action {
+    width: 150px;
+    text-align: center;
+}
+.add-share img, .action img {
+    vertical-align: text-top;
+}
+.add-share {
 }

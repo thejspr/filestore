@@ -27,9 +27,9 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
+        $this->pageTitle = "FileStorage - Welcome";
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		$this->layout='column1';
 		$this->render('index');
 	}
 
@@ -52,7 +52,6 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
-		$this->layout='column1';
 		$model=new LoginForm;
 
 		// if it is ajax validation request

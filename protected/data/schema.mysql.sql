@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS tbl_user (
     PRIMARY KEY (id)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 COLLATE latin1_general_ci ;
 
+
 DROP TABLE IF EXISTS tbl_file;
 CREATE TABLE IF NOT EXISTS tbl_file (
     id int(11) NOT NULL AUTO_INCREMENT,
@@ -26,6 +27,7 @@ CREATE TABLE IF NOT EXISTS tbl_file (
     KEY own_ind (owner_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 COLLATE latin1_general_ci ;
 
+
 DROP TABLE IF EXISTS tbl_folder;
 CREATE TABLE IF NOT EXISTS tbl_folder (
     id int(11) NOT NULL AUTO_INCREMENT,
@@ -36,3 +38,14 @@ CREATE TABLE IF NOT EXISTS tbl_folder (
     PRIMARY KEY (id),
     KEY own_ind (owner_id)
     ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 COLLATE latin1_general_ci ;
+
+
+DROP TABLE IF EXISTS tbl_file_shares;
+CREATE TABLE IF NOT EXISTS tbl_file_shares (
+    id int(11) NOT NULL AUTO_INCREMENT,
+    file_id int(11) NOT NULL,
+    user_id int(11) NOT NULL,
+    PRIMARY KEY (id)
+    ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE latin1_general_ci ;
+
+DROP TABLE IF EXISTS tbl_folder_shares;

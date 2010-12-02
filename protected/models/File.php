@@ -33,8 +33,10 @@ class File extends CActiveRecord
 		return 'tbl_file';
 	}
 
+    // sets the appropriate path for the file icon based on the files' extension.
     public function getIcon($file_name)
     {
+        // get the file extension.
         $extension = explode('.', $file_name);
         $extension = strtolower($extension[sizeof($extension)-1]);
         
@@ -82,7 +84,7 @@ class File extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-                        'folder_id' => 'Folder ID',
+            'folder_id' => 'Folder ID',
 			'owner_id' => 'Owner',
 			'file_name' => 'Filename',
 			'public' => 'Public',

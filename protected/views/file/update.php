@@ -1,8 +1,10 @@
 <?php
 
 $this->menu=array(
-	array('label'=>'Upload File', 'url'=>array('create')),
-	array('label'=>'View File', 'url'=>array('view', 'id'=>$model->id)),
+    array('label'=>'Back', 'url'=>array('view', 'id'=>$model->id)),
+    array('label'=>'Edit Shares', 'url'=>array('shares', 'id'=>$model->id)),
+    array('label'=>'Delete File', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this file?')),
+	array('label'=>'Upload New File', 'url'=>array('create')),
 );
 ?>
 

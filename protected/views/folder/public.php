@@ -1,60 +1,56 @@
 <script type="text/javascript">
-function alternateRowColor() {
-    var odd = false;
-    $('.item-list tr').each(function(){
-        if (odd)
-            $(this).addClass('odd');
-        else
-            $(this).removeClass('odd');
-
-        odd = !odd;
+function alternateRowColor(selector) {
+    $(selector+':even').each(function(){
+        $(this).css("background-color", "#FFF")
+    });
+    $(selector+':odd').each(function(){
+        $(this).css("background-color", "#E6F2FF")
     });
 }
 
 function loadFiles(folder_id){
-    var folder_element = $('#expand-folder-link-'+folder_id);
-    if (folder_element.text() == "expand") {
+    var folder_element = $('#expand-folder-img-'+folder_id);
+    if (folder_element.attr('alt') == "expand") {
         $.ajax({
           url: 'index.php?r=folder/files&id='+folder_id,
           success: function(data) {
             $('#folder-'+folder_id).after(data);
-            $(folder_element).text('collapse');
-            alternateRowColor();
+            $(folder_element).attr('src', 'images/folder_close.gif');
+            $(folder_element).attr('alt', 'collapse');
+            alternateRowColor('tr');
           }
         });
     } else {
        $(".nested-"+folder_id).each(function(){
-            $(this).hide();
+            $(this).remove();
        });
-       $(folder_element).text('expand');
-       alternateRowColor();
+       $(folder_element).attr('src', 'images/folder_open.gif');
+       $(folder_element).attr('alt', 'expand');
+       alternateRowColor('tr');
     }
 }
 
 $('document').ready(function(){
-    alternateRowColor();
+    alternateRowColor('tr');
 });
 </script>
 <?php
-if (!Yii::app()->user->isGuest) {
-    $this->menu=array(
-        array('label'=>'Upload File', 'url'=>array('file/create')),
-        array('label'=>'Create Folder', 'url'=>array('create')),
-    );
-}
+$this->menu=array(
+    array('label'=>'Upload File', 'url'=>array('file/create')),
+	array('label'=>'Create Folder', 'url'=>array('create')),
+);
 ?>
 
 <h2>Public Files</h2>
 
 <? if (count($files) == 0 && count($folders) == 0) { ?>
     <div class="empty-page">
-        There are no public files or folders at the moment.<br />
+        You have no files or folders at the moment.<br />
         Create new folders or upload files uding the links above.
     </div>
 <? } else { ?>
 <table class="item-list">
 <?
-$odd = true;
 foreach($folders as $folder){ ?>
 	<tr id="folder-<?= $folder->id?>">
 		<td>
@@ -63,11 +59,10 @@ foreach($folders as $folder){ ?>
 		</td>
         <td class="expand-folder">
             <? if (Folder::model()->hasFiles($folder->id) > 0) { ?>
-            <a id="expand-folder-link-<?= $folder->id?>" href="javascript:loadFiles(<?= $folder->id ?>)">expand</a>
+                <img onclick="javascript:loadFiles(<?= $folder->id ?>)" id="expand-folder-img-<?= $folder->id?>" src="images/folder_open.gif" alt="expand" />
             <? } ?>
         </td>
 	</tr>
-    <? $odd = !$odd; ?>
 <? } ?>
 <?
 foreach($files as $file){ ?>
@@ -78,7 +73,6 @@ foreach($files as $file){ ?>
 		</td>
         <td></td>
 	</tr>
-    <? $odd = !$odd; ?>
 <? } ?>
 </table>
 <? } ?>

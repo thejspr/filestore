@@ -7,6 +7,7 @@
 	<?php $bp = Yii::app()->request->baseUrl; // cache basepath ?>
 
     <? Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+    <? Yii::app()->clientScript->registerScriptFile('js/shared.js'); ?>
 	<link rel="stylesheet" type="text/css" href="<?= $bp ?>/css/layout.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?= $bp ?>/css/theme.css" media="screen" />
 
@@ -15,7 +16,7 @@
 <body>
 <div id="container">
 	<div id="header">
-        <h1><a href="<?= $this->createUrl('site/index')?>"><span style="color:#000">File</span>Store</a></h1>
+        <h1><a href="<?= $this->createUrl('site/index')?>"><span style="color:#000">File</span>Storage</a></h1>
 		<div id="nav">
 			<ul class="clearfix">
 				<? if (!Yii::app()->user->isGuest) { ?>
