@@ -1,3 +1,9 @@
+v0.8.1
+======
+6b821e1  small fixes
+daf42fd  Added functionality to share public files on facebook and twitter. Other UI changes. Several security and link fixes.
+27715c0  Finished file sharing. Made several navigation and ui changes.
+
 v0.8
 ====
 20d8378  changelog

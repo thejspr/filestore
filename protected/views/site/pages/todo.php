@@ -3,8 +3,9 @@
     <ul>
         <li>Login with facebook</li>
         <li>HTML5 drag'n'drop upload</li>
-        <li>Stylesheet that makes the site more accessible in mobile browsers</li>
+        <li>Stylesheet for mobile browsers</li>
         <li>Search files</li>
+        <li>File encryption option</li>
     </ul>
 </div>
 <br/>
