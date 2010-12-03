@@ -1,27 +1,35 @@
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script><script type="text/javascript">stLight.options({publisher:'ef90a239-1e5d-4674-8319-e21f5b0a79ff'});</script>
+
 <?php
 if (!Yii::app()->user->isGuest) {
-    $this->menu=array(
-        array('label'=>'Download', 'url'=>Yii::app()->params['filesPath'].$model->owner_id.'/'.$model->file_name),
-        array('label'=>'Back To Folder', 'url'=>array('folder/view', 'id'=>$model->folder_id)),
-        array('label'=>'Edit File', 'url'=>array('update', 'id'=>$model->id)),
-        array('label'=>'Edit Shares', 'url'=>array('shares', 'id'=>$model->id)),
-        array('label'=>'Delete File', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this file?')),
-        array('label'=>'Upload New File', 'url'=>array('create')),
-    );
+    $menu = array();
+    $menu[] = array('label'=>'Download', 'url'=>Yii::app()->params['filesPath'].$model->owner_id.'/'.$model->file_name);
+
+    if (Folder::model()->findByPk($model->folder_id)->public == 1)
+        $menu[] = array('label'=>'Back To Folder', 'url'=>array('folder/view', 'id'=>$model->folder_id));
+    
+    if($model->owner_id == Yii::app()->user->id) {
+        $menu[] = array('label'=>'Edit File', 'url'=>array('update', 'id'=>$model->id));
+        $menu[] = array('label'=>'Edit Shares', 'url'=>array('shares', 'id'=>$model->id));
+        $menu[] = array('label'=>'Delete File', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this file?'));
+    }
+    $this->menu = $menu;
 }
 ?>
 
-<h2><img src="<?= File::model()->getIcon($model->file_name) ?>" alt="file" /> <?php echo $model->file_name; ?></h2>
+<h1>File Details</h1>
 
 <? if ($this->isImage($model)){ ?>
     <div class="file-image">
-        <a href="<?= Yii::app()->params['filesPath'].Yii::app()->user->id.'/'.$model->file_name?>">
-        <img src="<?= Yii::app()->params['filesPath'].Yii::app()->user->id.'/'.$model->file_name ?>"
+        <a href="<?= Yii::app()->params['filesPath'].$model->owner_id.'/'.$model->file_name?>">
+        <img src="<?= Yii::app()->params['filesPath'].$model->owner_id.'/'.$model->file_name ?>"
              alt="<?= $model->file_name ?>" title="Click to download"/>
         </a>
     </div>
 <? } ?>
-
+<b>File name:</b><br />
+<img src="<?= File::model()->getIcon($model->file_name) ?>" class="v-centered" alt="filetype" /> <?= $model->file_name; ?>
+<br />
 <b>Folder:</b><br />
 <?= CHtml::link($folder->folder_name, $this->createUrl('folder/view', array('id'=>$folder->id))); ?>
 <br />
@@ -48,3 +56,11 @@ if (!Yii::app()->user->isGuest) {
 <br />
 <b>Last edit:</b><br />
 <?= $model->last_edit == 0 ? "Never edited" : date(Yii::app()->params['time_long'],$model->last_edit) ?>
+<br />
+<? if (File::model()->isPublic($model)) { ?>
+<b>Share:</b><br/>
+<!-- sharethis -->
+    <span class="st_twitter_hcount" displayText="Tweet"></span>
+    <span class="st_facebook_hcount" displayText="Share"></span>
+<br/>
+<? } ?>

@@ -33,7 +33,8 @@
 	<div class="row">
 		<?php echo $form->labelEx($model,'public'); ?>
 		<?php echo $form->checkbox($model,'public'); ?>
-		<?php echo $form->error($model,'public'); ?>
+		<?php echo $form->error($model,'public'); ?><br />
+        <i>Public files can be shared on popular services like Facebook and Twitter as they are accessible without login.</i>
 	</div>
 
 	<div class="row">

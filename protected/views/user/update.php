@@ -4,6 +4,6 @@ $this->menu=array(
 );
 ?>
 
-<h2>Edit Profile: <?= $model->username ?></h2>
+<h1>Edit Profile: <?= $model->username ?></h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

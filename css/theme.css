@@ -39,44 +39,19 @@ h3 {
 }
 /* submenu links */
 .sublinks {
-    margin-top: 30px;
     float: right;
     font-size: 90%;
 }
 .sublinks a {
-    font-weight: bold;
+    color: #205791;
+}
+.sublinks a:hover {
+    color: #000;
 }
 .sublinks ul li {
     float: left;
-    margin-right: 10px;
-    padding-right: 10px;
+    padding: 10px 8px 0px 8px;
     list-style: none;
-}
-.sublinks ul li a {
-    display: block;
-    padding: 1px 0;
-    text-decoration: none;
-}
-.sublinks ul a:hover {
-    color: #000;
-}
-.sublinks ul .last {
-    border: none;
-    margin-right: 0px;
-    padding-right: 10px;
-}
-.sublinks ul .on a {
-    color: #000;
-    font-weight: bold;
-    cursor: default;
-}
-.sublinks ul .on a:hover {
-    color: #000;
-}
-.clearfix, .last {
-    display: block;
-    margin-right: 0px;
-    padding-right: 0px;
 }
 /* Tables */
 .detail-view {
@@ -85,9 +60,6 @@ h3 {
 /* other stuff */
 .item-list {
     width: 400px;
-}
-.item-list {
-    border-top: 4px solid #347498;
 }
 .item-list img {
     vertical-align:text-top;
@@ -102,10 +74,10 @@ h3 {
 }
 .file-image {
     float:right;
-    width: 510px;
+    margin-right: 20px;
 }
 .file-image img {
-    max-height: 500px;
+    max-height: 350px;
     max-width: 500px;
 }
 .dl-image {
@@ -211,5 +183,12 @@ textarea {
 .add-share img, .action img {
     vertical-align: text-top;
 }
-.add-share {
+.profile table {
+    width: 600px;
+}
+.v-centered {
+    vertical-align: text-top;
+}
+#content h1 {
+    border-bottom: 1px solid #347498;
 }

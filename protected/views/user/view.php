@@ -1,12 +1,14 @@
 <?php
-$this->menu=array(
-	array('label'=>'Edit Profile', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete Profile', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete your profile including all your files?')),
-);
+if (Yii::app()->user->id == $model->id) {
+    $this->menu=array(
+        array('label'=>'Edit Profile', 'url'=>array('update', 'id'=>$model->id)),
+        array('label'=>'Delete Profile', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete your profile including all your files?')),
+    );
+}
 ?>
 
-<h2>View Profile: <?php echo $model->username; ?></h2>
-
+<h1>View Profile: <?php echo $model->username; ?></h1>
+<div class="profile">
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
@@ -19,3 +21,4 @@ $this->menu=array(
 		'failed_login_attempts'
 	),
 )); ?>
+</div>

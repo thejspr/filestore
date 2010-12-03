@@ -36,12 +36,12 @@ $('document').ready(function(){
 </script>
 <?php
 $this->menu=array(
-    array('label'=>'Upload File', 'url'=>array('file/create')),
-	array('label'=>'Create Folder', 'url'=>array('create')),
+    array('label'=>'Upload File', 'url'=>array('file/create', 'public'=>1)),
+	array('label'=>'Create Folder', 'url'=>array('create', 'public'=>1)),
 );
 ?>
 
-<h2>Public Files</h2>
+<h1>Public Files</h1>
 
 <? if (count($files) == 0 && count($folders) == 0) { ?>
     <div class="empty-page">

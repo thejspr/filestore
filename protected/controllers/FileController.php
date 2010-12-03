@@ -74,9 +74,10 @@ class FileController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate($folderid = null)
+	public function actionCreate($folderid = null, $public = 0)
 	{
 		$model=new File;
+        $model->public = $public;
         // fetch all the users folders for the drop down list.
         $folders=Folder::model()->findAll('owner_id = :owner_id',array(':owner_id'=>Yii::app()->user->id));
 

@@ -1,10 +1,9 @@
-<h2>Todo list</h2>
+<h1>Todo list</h1>
 <div class="todo-list">
     <ul>
         <li>Login with facebook</li>
         <li>HTML5 drag'n'drop upload</li>
         <li>Stylesheet that makes the site more accessible in mobile browsers</li>
-        <li>view and edit text based files</li>
         <li>Search files</li>
     </ul>
 </div>

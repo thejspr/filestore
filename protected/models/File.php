@@ -50,6 +50,16 @@ class File extends CActiveRecord
         return $img_path;
     }
 
+    public function isPublic($model) {
+        if ($model->public == 1)
+                return true;
+
+        if (Folder::model()->findByPk($model->folder_id)->public == 1)
+                return true;
+
+        return false;
+    }
+
 	/**
 	 * @return array validation rules for model attributes.
 	 */

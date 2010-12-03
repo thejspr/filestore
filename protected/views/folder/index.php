@@ -32,7 +32,7 @@ $this->menu=array(
 );
 ?>
 
-<h2>My Files</h2>
+<h1>My Files</h1>
 
 <? if (count($root_files) == 0 && count($folders) == 0 && count($shared_files) == 0) { ?>
     <div class="empty-page">

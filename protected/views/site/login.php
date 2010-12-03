@@ -2,7 +2,7 @@
 $this->pageTitle=Yii::app()->name . ' - Login';
 ?>
 <div class="centered">
-<h2>Login</h2>
+<h1>Login</h1>
 
 	<p>Please fill out the following form with your login credentials:</p>
 
