@@ -51,6 +51,9 @@ if (!Yii::app()->user->isGuest) {
 <b>Public:</b><br />
 <?= $model->public == 1 ? "Yes" : "No" ?>
 <br />
+<b>File Size:</b><br />
+<?= $model->file_size ?>
+<br />
 <b>Uploaded:</b><br />
 <?= date(Yii::app()->params['time_long'],$model->created) ?>
 <br />

@@ -2,13 +2,14 @@
 <div class="todo-list">
     <ul>
         <li>Login with facebook</li>
-        <li>HTML5 drag'n'drop upload</li>
         <li>Stylesheet for mobile browsers</li>
         <li>Search files</li>
         <li>File encryption option</li>
+        <li>Route downloads throug controller for security reasons</li>
     </ul>
 </div>
 <br/>
+<!--
 <h3>Changelog:</h3>
 <div class="changelog">
 <?
@@ -33,3 +34,4 @@ if (file_exists($file_path)) {
 ?>
 </div>
 <br />
+-->

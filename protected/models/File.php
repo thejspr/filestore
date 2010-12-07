@@ -70,9 +70,10 @@ class File extends CActiveRecord
 		return array(
 			array('owner_id, file_name', 'required'),
 			array('owner_id, public, created, last_edit', 'numerical', 'integerOnly'=>true),
+            array('file_size', 'numerical', 'min'=>1, 'max'=>Yii::app()->params['maxFileSize']),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, folder_id, owner_id, file_name, public, created, last_edit', 'safe', 'on'=>'search'),
+			array('id, folder_id, owner_id, file_name, public, file_size, created, last_edit', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -98,6 +99,7 @@ class File extends CActiveRecord
 			'owner_id' => 'Owner',
 			'file_name' => 'Filename',
 			'public' => 'Public',
+            'file_size' => 'File Size',
 			'created' => 'Created',
 			'last_edit' => 'Last Edit',
 		);
@@ -119,6 +121,7 @@ class File extends CActiveRecord
 		$criteria->compare('owner_id',$this->owner_id);
 		$criteria->compare('file_name',$this->file_name,true);
 		$criteria->compare('public',$this->public);
+		$criteria->compare('file_size',$this->file_size);
 		$criteria->compare('created',$this->created);
 		$criteria->compare('last_edit',$this->last_edit);
 

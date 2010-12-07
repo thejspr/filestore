@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS tbl_file (
     owner_id int(11) NOT NULL,
     file_name varchar(128) NOT NULL,
     public tinyint(1) DEFAULT NULL,
+    file_size int(11) DEFAULT 0,
     created int(11) DEFAULT NULL,
     last_edit int(11) DEFAULT 0,
     PRIMARY KEY (id),

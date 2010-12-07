@@ -85,6 +85,8 @@ class FileController extends Controller
         if (isset($folderid))
            $model->folder_id = $folderid;
 
+        $model->file_size = 99999999999999999;
+
         // check if the request is a POST (meaning the form has been submitted).
         if(isset($_POST['File']))
 		{
@@ -97,15 +99,23 @@ class FileController extends Controller
             // set model properties corresponding to the uploaded file
 			$model->file_name = $file;
             $model->owner_id = Yii::app()->user->id;
-			$model->created = time();
             $model->folder_id = $_POST['File']['folder_id'];
 			$path = Yii::app()->params['filesPath'].'/'.Yii::app()->user->id.'/';
-
+            
+            // check if the file sieze is within the limit
+            if(isset($_SERVER['CONTENT_LENGTH']) && $_SERVER['CONTENT_LENGTH'] > Yii::app()->params['maxFileSize']) {
+                $model->file_size = $_SERVER['CONTENT_LENGTH'];
+            } else if (isset($file->size)) {
+                $model->file_size = $file->size;
+            }
+            
             // save the model and save the actual file into the users folder.
-			if($model->save()) {
-				$file->saveAs($path.$model->file_name);
-				$this->redirect(array('view','id'=>$model->id));
-			}
+            if($model->save()) {
+                $model->created = time();
+                $model->save();
+                $file->saveAs($path.$model->file_name);
+                $this->redirect(array('view','id'=>$model->id));
+            }
 		}
 
         // if the request is not a POST, then render the update view containing the form.

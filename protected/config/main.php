@@ -78,6 +78,7 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		'filesPath'=>'protected/data/f/',
+        'maxFileSize'=> 1048576 * ini_get('upload_max_filesize'),
 		'time_long'=>'d-m-Y h:i',
 		'facebook'=> 0,
 		'facebook_api'=>'123271937729319',
