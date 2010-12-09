@@ -116,14 +116,7 @@ class File extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('folder_id',$this->folder_id);
-		$criteria->compare('owner_id',$this->owner_id);
 		$criteria->compare('file_name',$this->file_name,true);
-		$criteria->compare('public',$this->public);
-		$criteria->compare('file_size',$this->file_size);
-		$criteria->compare('created',$this->created);
-		$criteria->compare('last_edit',$this->last_edit);
 
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria'=>$criteria,

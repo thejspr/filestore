@@ -21,6 +21,23 @@ class SiteController extends Controller
 		);
 	}
 
+    public function actionSearch($query) 
+    {
+        if (Yii::app()->user->isGuest) {
+            $files = File::model()->findAll('public = 1 AND file_name LIKE :query', array(':query'=>"%".$query."%"));
+            $folders = Folder::model()->findAll('public = 1 AND folder_name LIKE :query', array(':query'=>"%".$query."%"));
+        } else {
+            $files = File::model()->findAll('file_name LIKE :query', array(':query'=>"%".$query."%"));
+            $folders = Folder::model()->findAll('folder_name LIKE :query', array(':query'=>"%".$query."%"));
+        }
+
+        $this->render('search', array(
+            'files'=>$files,
+            'folders'=>$folders,
+            'query'=>$query,
+        ));
+    }
+
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.

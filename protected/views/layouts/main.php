@@ -8,6 +8,19 @@
 
     <? Yii::app()->clientScript->registerCoreScript('jquery'); ?>
     <? Yii::app()->clientScript->registerScriptFile('js/shared.js'); ?>
+    <script>
+        function runScript(e) {
+            if (e.keyCode == 13) {
+                search();   
+                return false;
+            }
+        }
+        function search() {
+            var query = $('#search-field').val();
+            if (query != "")
+                window.location = "<?= $this->createUrl('site/search') ?>&query=" + query
+        }
+    </script>
 	<link rel="stylesheet" type="text/css" href="<?= $bp ?>/css/layout.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?= $bp ?>/css/theme.css" media="screen" />
 
@@ -16,8 +29,15 @@
 <body>
 <div id="container">
 	<div id="header">
+        <div id="search">
+            <input type="input" id="search-field" onkeypress="return runScript(event)"
+                   placeholder="Search<?= Yii::app()->user->isGuest ? " public" : "" ?> files" />
+            <a href="javascript:search()">
+                <img src="images/icons/magnifier.png" id="search-image" alt="Search" />
+            </a>
+        </div>
         <h1><a href="<?= $this->createUrl('site/index')?>"><span style="color:#000">File</span>Storage</a></h1>
-		<div id="nav">
+        <div id="nav">
 			<ul class="clearfix">
 				<? if (!Yii::app()->user->isGuest) { ?>
 					<li class="clearfix"><?= CHtml::link('Home', array('/site/index')) ?></li>

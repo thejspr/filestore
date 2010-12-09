@@ -41,6 +41,7 @@ h3 {
 .sublinks {
     float: right;
     font-size: 90%;
+    paddint-top: 10px;
 }
 .sublinks a {
     color: #205791;
@@ -197,4 +198,14 @@ textarea {
     padding-left: 20px;
     padding-bottom: 4px;
     display: none;
+}
+#search {
+   float: right;
+   padding-right: 10px;
+}
+#search-field {
+    border: 1px solid #CCC;
+}
+#search-image {
+    vertical-align: middle;
 }

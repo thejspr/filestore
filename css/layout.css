@@ -33,6 +33,7 @@ a img {border:none;}
 }
 #nav {
     float: right;
+    padding-top: 10px;
 }
 #nav a {
     font-weight: normal;

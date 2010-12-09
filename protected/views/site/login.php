@@ -1,8 +1,8 @@
 <?php
 $this->pageTitle=Yii::app()->name . ' - Login';
 ?>
-<div class="centered">
 <h1>Login</h1>
+<div class="centered">
 
 	<p>Please fill out the following form with your login credentials:</p>
 

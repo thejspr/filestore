@@ -3,9 +3,7 @@
     <ul>
         <li>Login with facebook</li>
         <li>Stylesheet for mobile browsers</li>
-        <li>Search files</li>
         <li>File encryption option</li>
-        <li>Route downloads throug controller for security reasons</li>
     </ul>
 </div>
 <br/>
