@@ -27,8 +27,14 @@ class SiteController extends Controller
             $files = File::model()->findAll('public = 1 AND file_name LIKE :query', array(':query'=>"%".$query."%"));
             $folders = Folder::model()->findAll('public = 1 AND folder_name LIKE :query', array(':query'=>"%".$query."%"));
         } else {
-            $files = File::model()->findAll('file_name LIKE :query', array(':query'=>"%".$query."%"));
-            $folders = Folder::model()->findAll('folder_name LIKE :query', array(':query'=>"%".$query."%"));
+            $files = File::model()->findAll(
+                    '(owner_id = :oid OR public = 1) AND file_name LIKE :query',
+                    array(':query'=>'%'.$query.'%',':oid'=>Yii::app()->user->id)
+                    );
+
+            $folders = Folder::model()->findAll(
+                    '(owner_id = :oid OR public = 1) AND folder_name LIKE :query',
+                    array(':query'=>'%'.$query.'%',':oid'=>Yii::app()->user->id));
         }
 
         $this->render('search', array(
