@@ -18,6 +18,11 @@ if (!Yii::app()->user->isGuest) {
 ?>
 
 <h1>File Details</h1>
+<?php if(Yii::app()->user->hasFlash('success')): ?>
+<div class="success">
+    <?php echo Yii::app()->user->getFlash('success'); ?>
+</div>
+<?php endif; ?>
 
 <? if ($this->isImage($model)){ ?>
     <div class="file-image">
@@ -67,3 +72,4 @@ if (!Yii::app()->user->isGuest) {
     <span class="st_facebook_hcount" displayText="Share"></span>
 <br/>
 <? } ?>
+<br/>

@@ -34,6 +34,12 @@ $this->menu=array(
 
 <h1>My Files</h1>
 
+<?php if(Yii::app()->user->hasFlash('success')): ?>
+<div class="success">
+    <?php echo Yii::app()->user->getFlash('success'); ?>
+</div>
+<?php endif; ?>
+
 <? if (count($root_files) == 0 && count($folders) == 0 && count($shared_files) == 0) { ?>
     <div class="empty-page">
         You have no files or folders at the moment.<br />

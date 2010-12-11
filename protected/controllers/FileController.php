@@ -108,12 +108,13 @@ class FileController extends Controller
             } else if (isset($file->size)) {
                 $model->file_size = $file->size;
             }
+            $model->created = time();
             
             // save the model and save the actual file into the users folder.
             if($model->save()) {
-                $model->created = time();
-                $model->save();
                 $file->saveAs($path.$model->file_name);
+
+                Yii::app()->user->setFlash('success', 'file successfully uploaded');
                 $this->redirect(array('view','id'=>$model->id));
             }
 		}
@@ -160,6 +161,8 @@ class FileController extends Controller
                     // rename the file: rename(old filename, new filename)
                     rename($path.$oldFileName, $path.$model->file_name);
                 }
+                Yii::app()->user->setFlash('success', 'file successfully updated');
+
                 // redirect to view the updated file
                 $this->redirect(array('view','id'=>$model->id));
             }
@@ -195,6 +198,8 @@ class FileController extends Controller
             // if the file exists on disk then delete it.
             if(file_exists($file_on_disk))
                 unlink ($file_on_disk);
+
+            Yii::app()->user->setFlash('success', 'File successfully deleted');
 
             // redirect to the folder in which the deleted file was stored.
 			$this->redirect($this->createUrl('folder/view',array('id'=>$folder_id)));

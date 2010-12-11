@@ -209,3 +209,10 @@ textarea {
 #search-image {
     vertical-align: middle;
 }
+.success {
+    padding: 8px;
+    margin: 10px;
+    font-size: 110%;
+    color: #264409;
+    border: 1px solid #264409;
+}

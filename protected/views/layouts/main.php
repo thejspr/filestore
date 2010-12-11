@@ -4,25 +4,25 @@
 	<meta name="language" content="en" />
 	<title><?= $this->pageTitle ?></title>
 
-	<?php $bp = Yii::app()->request->baseUrl; // cache basepath ?>
-
     <? Yii::app()->clientScript->registerCoreScript('jquery'); ?>
     <? Yii::app()->clientScript->registerScriptFile('js/shared.js'); ?>
     <script>
         function runScript(e) {
             if (e.keyCode == 13) {
-                search();   
+                search();
                 return false;
             }
         }
+
         function search() {
             var query = $('#search-field').val();
             if (query != "")
                 window.location = "<?= $this->createUrl('site/search') ?>&query=" + query
         }
     </script>
-	<link rel="stylesheet" type="text/css" href="<?= $bp ?>/css/layout.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="<?= $bp ?>/css/theme.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/layout.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="css/theme.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/mobile.css" media="handheld" />
 
 	<? $this->renderPartial('//facebook/init');  // facebook init scripts ?>
 </head>

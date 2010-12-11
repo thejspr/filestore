@@ -2,7 +2,6 @@
 <div class="todo-list">
     <ul>
         <li>Login with facebook</li>
-        <li>Stylesheet for mobile browsers</li>
         <li>File encryption option</li>
     </ul>
 </div>

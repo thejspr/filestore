@@ -9,6 +9,13 @@ if (!Yii::app()->user->isGuest) {
 ?>
 
 <h1>Files in <b><?php echo $model->folder_name; ?></b></h1>
+
+<?php if(Yii::app()->user->hasFlash('success')): ?>
+<div class="success">
+    <?php echo Yii::app()->user->getFlash('success'); ?>
+</div>
+<?php endif; ?>
+
 <?= $model->public == 1 ? "<div class='public-msg'>This folder is public and its content is accessible to all users.</div>" : ""; ?>
 <br /><br />
 <? if (count($files) > 0) { ?>

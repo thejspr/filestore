@@ -5,4 +5,7 @@ function alternateRowColor(selector) {
     $(selector+':odd').each(function(){
         $(this).css("background-color", "#E6F2FF")
     });
+
 }
+
+setTimeout("$('.success').fadeOut('slow');",5000);
