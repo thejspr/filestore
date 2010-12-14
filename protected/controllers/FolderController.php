@@ -27,7 +27,7 @@ class FolderController extends Controller
 	{
 		return array(
             array('allow',
-                'actions'=>array('view','public'),
+                'actions'=>array('view','public','rss'),
                 'users'=>array('*'),
             ),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -39,6 +39,48 @@ class FolderController extends Controller
 			),
 		);
 	}
+    
+    public function actionRss()
+    {
+        // import Zend Feed class
+        Yii::import('application.vendors.*');
+        require_once('Zend/Feed.php');
+        
+        // fetch all public files and files in public folders
+        $files = array();
+        $files[] = File::model()->FindAll('public = 1');
+        
+        $folders = Folder::model()->FindAll('public = 1');
+        foreach ($folders as $folder) {
+            $files_in_folder = File::model()->Find('folder_id = :fid', array(':fid'=>$folder->id));
+            foreach ($files_in_folder as $file_in_folder) {
+                $files[] = $files_in_folder;
+            }
+        }
+        
+        // remove duplicates (public files inside a public folder).
+        $files = array_unique($files);
+        
+        // 
+        $entries = array();
+        foreach ($files as $file) {
+            $entries[] = array(
+                'title'=>$file->file_name,
+                'link'=>$this->createUrl('file/view',array('id'=>$file->id)),
+                'description'=>"Filename: ".$file->file_name." - Size:".$file->file_size,
+                'lastUpdate'=>$file->last_edit,
+            );
+        }
+        
+        // generate and render RSS feed
+        $feed=Zend_Feed::importArray(array(
+            'title'   => 'FileStorage Public Files RSS Feed',
+            'link'    => $this->createUrl('folder/public'),
+            'charset' => 'UTF-8',
+            'entries' => $entries,      
+        ), 'rss');
+        $feed->send();        
+    }
 
     public function actionPublic() {
         $folders = Folder::model()->FindAll('public = 1');
