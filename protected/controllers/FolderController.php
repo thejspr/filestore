@@ -197,7 +197,7 @@ class FolderController extends Controller
         // get all users folders
 		$folders = Folder::model()->findAll('owner_id = :owner_id AND folder_name != "root"',
                 array(':owner_id'=>$uid));
-		// get his specific root folder
+		// get user specific root folder
         $root_folder = Folder::model()->find('owner_id = :owner_id AND folder_name = "root"',
                 array(':owner_id'=>$uid));
         // get the files inside the root folder
