@@ -62,10 +62,11 @@ class FolderController extends Controller
         
         $entries = array();
         foreach ($files as $file) {
+            $user = User::model()->findByPk($file->owner_id);
             $entries[] = array(
                 'title'=>$file->file_name,
                 'link'=>urlencode($this->createUrl('file/view',array('id'=>$file->id))),
-                'description'=>"Filename: ".$file->file_name." - Size:".$file->file_size,
+                'description'=>"Filename: ".$file->file_name." - Size: ".$file->file_size." bytes - Uploaded by: ".$user->username,
                 'lastUpdate'=>$file->last_edit == 0 ? $file->created : $file->last_edit,
             );
         }
