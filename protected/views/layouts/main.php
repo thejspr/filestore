@@ -1,4 +1,5 @@
-<!doctype html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="language" content="en" />
@@ -23,13 +24,13 @@
     <link rel="stylesheet" type="text/css" href="css/layout.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="css/theme.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/mobile.css" media="handheld" />
-
-	<? $this->renderPartial('//facebook/init');  // facebook init scripts ?>
+	
 </head>
 <body>
 <div id="container">
 	<div id="header">
         <div id="search">
+            <? $this->renderPartial('//facebook/init');  // facebook init scripts ?>
             <input type="input" id="search-field" onkeypress="return runScript(event)"
                    placeholder="Search<?= Yii::app()->user->isGuest ? " public" : "" ?> files" />
             <a href="javascript:search()">
@@ -54,7 +55,6 @@
 					<li class="clearfix"><?= CHtml::link('Todo List', array('site/page', 'view'=>'todo')) ?></li>
 					<li class="clearfix last"><?= CHtml::link('About', array('site/page', 'view'=>'about')) ?></li>
 				<? } ?>
-				<? $this->renderPartial('//facebook/menu'); // facebook login/logout buttons ?>
 			</ul>
 		</div> <!-- nav -->
 	</div> <!-- header -->

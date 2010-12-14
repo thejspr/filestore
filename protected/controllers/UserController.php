@@ -68,17 +68,7 @@ class UserController extends Controller
 			$model->attributes=$_POST['User'];
 			$model->created = time();
 
-
 			if($model->save()) {
-				// make folder in database.
-                $folder = new Folder;
-                $folder->folder_name = 'root';
-				$folder->is_root = 1;
-				$folder->owner_id = $model->id;
-				$folder->save();
-				// create folder on disk
-				mkdir(Yii::app()->params['filesPath'].'/'.$model->id);
-
 				$this->redirect(array('view','id'=>$model->id));
 			}
 		}

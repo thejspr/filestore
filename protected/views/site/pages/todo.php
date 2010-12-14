@@ -1,7 +1,6 @@
 <h1>Todo list</h1>
 <div class="todo-list">
     <ul>
-        <li>Login with facebook</li>
         <li>File encryption option</li>
     </ul>
 </div>

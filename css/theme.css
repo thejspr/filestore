@@ -216,3 +216,28 @@ textarea {
     color: #264409;
     border: 1px solid #264409;
 }
+.fblogin {
+    font-size: 75%;
+    font-style: italic;
+}
+.login-wrapper {
+    position: relative;
+}
+.login {
+    border-right: 1px solid #ccc;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 420px;
+    margin-left: 10px;
+    padding: 10px 50px 0px 10px;
+}
+.fb-login-box {
+    position: absolute;
+    top: 0px;
+    left: 490px;
+    width: 200px;
+    height: 100px;
+    margin-left: 50px;
+    padding: 10px 50px 50px 50px;
+}

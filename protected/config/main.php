@@ -23,7 +23,11 @@ return array(
 			'password'=>'dev123',
 		),
 	),
-
+   'behaviors' => array(
+        'onbeginRequest' => array(
+                'class' => 'application.components.StartupBehavior',
+        ),
+    ),
 	// application components
 	'components'=>array(
 		'user'=>array(
@@ -39,12 +43,6 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
-		// uncomment the following to use a MySQL database
-		/*
-		'db'=>array(
-			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),
-		*/
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=fapp',
 			'emulatePrepare' => true,
@@ -78,10 +76,11 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		'filesPath'=>'protected/data/f/',
-        'maxFileSize'=> 1048576 * ini_get('upload_max_filesize'),
+    'maxFileSize'=> 1048576 * ini_get('upload_max_filesize'),
 		'time_long'=>'d-m-Y h:i',
-		'facebook'=> 0,
-		'facebook_api'=>'123271937729319',
-		'facebook_secret'=>'404e64224550947da719f55f90070e50',
+		'fb'=> 1,
+		'fb_appid' => '123271937729319',
+		'fb_api'=>'b180e217926135292c10800d9c27045f',
+		'fb_sec'=>'404e64224550947da719f55f90070e50',
 	),
 );

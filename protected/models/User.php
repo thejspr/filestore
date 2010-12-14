@@ -74,6 +74,7 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+			'fb_id' => 'Facebook ID',
 			'username' => 'Username',
 			'password' => 'Password',
 			'password_confirmation' => 'Password confirmation',
@@ -121,6 +122,7 @@ class User extends CActiveRecord
 	}
 
 	public function beforeSave() {
+        
 		$currently_saved_user = User::model()->findByPk((int)$this->id);
 
 		if ($this->scenario == "update")
@@ -137,4 +139,17 @@ class User extends CActiveRecord
 
 		return true;
  	}
+
+    public function afterSave() {
+        if(!file_exists(Yii::app()->params['filesPath'].'/'.$this->id)) {
+            // make folder in database.
+            $folder = new Folder;
+            $folder->folder_name = 'root';
+            $folder->is_root = 1;
+            $folder->owner_id = $this->id;
+            $folder->save();
+            // create folder on disk
+            mkdir(Yii::app()->params['filesPath'].'/'.$this->id);
+        }
+    }
 }

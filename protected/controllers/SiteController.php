@@ -98,13 +98,51 @@ class SiteController extends Controller
 		$this->render('login',array('model'=>$model));
 	}
 
+    public function actionFbLogin()
+    {
+        if (!isset(Yii::app()->params['uid']))
+            throw new CHttpException(400,'An error occured during Facebook authentication. Not initialized.');
+        
+        $user = User::model()->find('fb_id = :uid',array(':uid'=>Yii::app()->params['uid']));
+        
+        if ($user === null) {
+            $fb_user = json_decode(file_get_contents('https://graph.facebook.com/me?access_token='.Yii::app()->params['access_token']));
+            
+            $user = new User;
+            $user->scenario = 'register';
+            $user->fb_id = Yii::app()->params['uid'];
+            $user->username = $fb_user->name;
+            $user->password = "aosdmv394inv";
+            $user->password_confirmation = "aosdmv394inv";
+            $user->email = $fb_user->email;
+            $user->created = time();
+            $user->save();
+        } else {
+            $user->saveAttributes(array('last_login' => time(), 'login_count' => $user->login_count + 1));
+        }
+        
+        $model=new LoginForm;
+        $model->username = $user->username;
+        $model->password = "aosdmv394inv";
+        $model->rememberMe = 0;
+        
+        if ($model->login()) {
+            Yii::app()->user->setFlash('success', 'You have successfully logged in with Facebook.');
+            $this->redirect($this->createUrl('folder/index'));
+        } else {
+            var_dump($user->getErrors());
+            //throw new CHttpException(400,'An error occured during Facebook authentication.');
+        }
+    }
+
 	/**
 	 * Logs out the current user and redirect to homepage.
 	 */
 	public function actionLogout()
 	{
+
 		Yii::app()->user->logout();
-        
-		$this->redirect(Yii::app()->homeUrl);
+		
+		$this->render('logout');
 	}
 }

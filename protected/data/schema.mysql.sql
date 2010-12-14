@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS tbl_user;
 CREATE TABLE IF NOT EXISTS tbl_user (
     id int(11) NOT NULL AUTO_INCREMENT,
+    fb_id int(11) DEFAULT NULL,
     username varchar(128) NOT NULL,
     password varchar(128) NOT NULL,
     salt varchar(128) DEFAULT NULL,
