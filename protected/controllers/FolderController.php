@@ -42,44 +42,44 @@ class FolderController extends Controller
     
     public function actionRss()
     {
-        // import Zend Feed class
+        // import Zend Feed class and Zend Autoloader
         Yii::import('application.vendors.*');
-        require_once('Zend/Feed.php');
+        require_once 'Zend/Loader/Autoloader.php';
+        spl_autoload_unregister(array('YiiBase','autoload')); 
+        spl_autoload_register(array('Zend_Loader_Autoloader','autoload')); 
+        spl_autoload_register(array('YiiBase','autoload'));
         
         // fetch all public files and files in public folders
-        $files = array();
-        $files[] = File::model()->FindAll('public = 1');
-        
+        $files = File::model()->FindAll('public = 1 order by created DESC');   
         $folders = Folder::model()->FindAll('public = 1');
+        
         foreach ($folders as $folder) {
-            $files_in_folder = File::model()->Find('folder_id = :fid', array(':fid'=>$folder->id));
-            foreach ($files_in_folder as $file_in_folder) {
-                $files[] = $files_in_folder;
-            }
+            $files[] = File::model()->Find('folder_id = :fid', array(':fid'=>$folder->id));
         }
         
         // remove duplicates (public files inside a public folder).
-        $files = array_unique($files);
+        $files = array_unique($files, SORT_REGULAR);
         
-        // 
         $entries = array();
         foreach ($files as $file) {
             $entries[] = array(
                 'title'=>$file->file_name,
-                'link'=>$this->createUrl('file/view',array('id'=>$file->id)),
+                'link'=>urlencode($this->createUrl('file/view',array('id'=>$file->id))),
                 'description'=>"Filename: ".$file->file_name." - Size:".$file->file_size,
-                'lastUpdate'=>$file->last_edit,
+                'lastUpdate'=>$file->last_edit == 0 ? $file->created : $file->last_edit,
             );
         }
         
         // generate and render RSS feed
         $feed=Zend_Feed::importArray(array(
             'title'   => 'FileStorage Public Files RSS Feed',
-            'link'    => $this->createUrl('folder/public'),
+            'link'    => $this->createAbsoluteUrl('folder/public'),
             'charset' => 'UTF-8',
-            'entries' => $entries,      
+            'entries' => $entries      
         ), 'rss');
-        $feed->send();        
+        
+        $feed->send();
+             
     }
 
     public function actionPublic() {

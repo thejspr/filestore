@@ -35,10 +35,15 @@ $('document').ready(function(){
 });
 </script>
 <?php
-if (!Yii::app()->user->isGuest)
+if (!Yii::app()->user->isGuest) {
+    $this->menu=array(
+        array('label'=>'Upload File', 'url'=>array('file/create', 'public'=>1)),
+    	array('label'=>'Create Folder', 'url'=>array('create', 'public'=>1)),
+    );
+}
+
 $this->menu=array(
-    array('label'=>'Upload File', 'url'=>array('file/create', 'public'=>1)),
-	array('label'=>'Create Folder', 'url'=>array('create', 'public'=>1)),
+    array('label'=>'RSS Feed', 'url'=>array('folder/rss')),
 );
 ?>
 
