@@ -140,7 +140,21 @@ class User extends CActiveRecord
 		return true;
  	}
 
-    public function afterSave() {
+    public function afterSave() 
+    {
+        // if the record is new, then send a welcome email.
+        if($this->isNewRecord) {
+            
+            $message = new YiiMailMessage;
+            $message->view = 'email';
+            $message->setBody(array('model'=>$this), 'text/html');                 
+            $message->addTo($this->email);
+            $message->from = Yii::app()->params['admin_email'];
+            $message->subject = 'Hello '.$this->username.', welcome to FileStorage.';
+            
+            Yii::app()->mail->send($message);
+        }
+            
         if(!file_exists(Yii::app()->params['filesPath'].'/'.$this->id)) {
             // make folder in database.
             $folder = new Folder;

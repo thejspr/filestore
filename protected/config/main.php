@@ -84,10 +84,8 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 	    'admin_email'=>'jkjeldgaard@gmail.com',
-	    'smtp_host'=>'jkjeldgaard.xen.prgmr.com',
-	    'smtp_email'=>'mailer@jkjeldgaard.xen.prgmr.com',
 		'filesPath'=>'protected/data/f/',
-    'maxFileSize'=> 1048576 * ini_get('upload_max_filesize'),
+        'maxFileSize'=> 1048576 * ini_get('upload_max_filesize'),
 		'time_long'=>'d-m-Y h:i',
 		'fb'=> 1,
 		'fb_appid' => '123271937729319',

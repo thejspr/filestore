@@ -70,30 +70,6 @@ class UserController extends Controller
             
             // used for logging in directly
             $pwd = $model->password;
-            
-            // if the record is new, then send a welcome email.
-            if($model->isNewRecord) {
-                
-                $message = new YiiMailMessage;
-                $message->view = 'email';
-                 
-                //userModel is passed to the view
-                $message->setBody(array('model'=>$model), 'text/html');
-                 
-                $message->addTo($model->email);
-                $message->from = Yii::app()->params['admin_email'];
-                $message->subject = 'Hello '.$model->username.', welcome to FileStorage.';
-                
-                Yii::app()->mail->send($message);
-                
-                /*
-                $email->to = $model->email;
-                $email->subject = 'Hello '.$model->username.', welcome to FileStorage.';
-                $email->replyTo = "jkjeldgaard@gmail.com";
-                $email->message = $this->renderPartial('email', array('model' => $model), true);
-                $email->send();
-                */
-            }
 
 			if($model->save()) {
 	            // authenticate the newly registered user and redirect to file overview.    
