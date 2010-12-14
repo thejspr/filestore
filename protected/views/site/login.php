@@ -10,7 +10,7 @@ $this->pageTitle=Yii::app()->name . ' - Login';
 <div class="login-wrapper centered">
     <div class="login">
     
-    	<p>Please fill out the following form with your login credentials:</p>
+    	<p>Please fill out the following form with your username and password:</p>
     
     	<div class="form login-form">
     		<?php $form=$this->beginWidget('CActiveForm', array(
@@ -46,7 +46,7 @@ $this->pageTitle=Yii::app()->name . ' - Login';
     
     <? if(Yii::app()->params['fb']) { ?>
         <div class="fb-login-box">
-            Authenticate using Facebook:
+            If you registered using Facebook, you can login here:
             <br/><br/>
             <fb:login-button perms="email"></fb:login-button>
         </div>

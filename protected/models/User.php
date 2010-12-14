@@ -41,7 +41,7 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('username, email', 'required', 'on'=>'register, update'),
-			array('username, email', 'unique'),
+			//array('username, email', 'unique'),
 			array('username', 'length', 'max'=>20, 'min'=>1),
 			array('email','email'),
 			array('password', 'required', 'on'=>'register, login'),
@@ -122,7 +122,7 @@ class User extends CActiveRecord
 	}
 
 	public function beforeSave() {
-        
+	           
 		$currently_saved_user = User::model()->findByPk((int)$this->id);
 
 		if ($this->scenario == "update")

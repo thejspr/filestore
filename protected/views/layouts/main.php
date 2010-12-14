@@ -6,6 +6,8 @@
 	<title><?= $this->pageTitle ?></title>
 
     <? Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+    <? Yii::app()->clientScript->registerScriptFile('js/jquery.hint.js'); ?>
+    <? Yii::app()->clientScript->registerScriptFile('js/modernizr-1.6.min.js'); ?>
     <? Yii::app()->clientScript->registerScriptFile('js/shared.js'); ?>
     <script>
         function runScript(e) {
@@ -37,8 +39,11 @@
 	<div id="header">
         <div id="search">
             <? $this->renderPartial('//facebook/init');  // facebook init scripts ?>
-            <input type="input" id="search-field" onkeypress="return runScript(event)"
-                   placeholder="Search<?= Yii::app()->user->isGuest ? " public" : "" ?> files" />
+            <? $search_title = "Search";
+                $search_title .= Yii::app()->user->isGuest ? " public" : "";
+                $search_title .= " files"; ?>
+            <input type="input" id="search-field" onkeypress="return runScript(event)" 
+            title="<?= $search_title ?>" placeholder="<?= $search_title ?>" />
             <a href="javascript:search()">
                 <img src="images/icons/magnifier.png" id="search-image" alt="Search" />
             </a>

@@ -15,6 +15,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'application.ext.yii-mail.YiiMailMessage',
 	),
 
 	'modules'=>array(
@@ -43,6 +44,13 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
+        'mail' => array(
+            'class' => 'application.ext.yii-mail.YiiMail',
+            'transportType' => 'php',
+            'viewPath' => 'application.views.user',
+            'logging' => true,
+            'dryRun' => false
+        ),
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=fapp',
 			'emulatePrepare' => true,
@@ -75,6 +83,9 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
+	    'admin_email'=>'jkjeldgaard@gmail.com',
+	    'smtp_host'=>'jkjeldgaard.xen.prgmr.com',
+	    'smtp_email'=>'mailer@jkjeldgaard.xen.prgmr.com',
 		'filesPath'=>'protected/data/f/',
     'maxFileSize'=> 1048576 * ini_get('upload_max_filesize'),
 		'time_long'=>'d-m-Y h:i',

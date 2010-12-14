@@ -16,4 +16,7 @@
 		width: 100% !important;
 		text-align: center;
     }
+    .footer {
+        display: none;
+    }
 }

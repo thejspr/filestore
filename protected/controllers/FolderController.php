@@ -27,11 +27,11 @@ class FolderController extends Controller
 	{
 		return array(
             array('allow',
-                'actions'=>array('view','public','rss'),
+                'actions'=>array('view','public','rss','files'),
                 'users'=>array('*'),
             ),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','view','create','update','delete','files'),
+				'actions'=>array('index','view','create','update','delete'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
