@@ -7,7 +7,7 @@ if (Yii::app()->user->id == $model->id) {
 }
 ?>
 
-<h1>View Profile: <?php echo $model->username; ?></h1>
+<h1>View Profile</h1>
 <div class="profile">
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
