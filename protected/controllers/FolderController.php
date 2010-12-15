@@ -100,10 +100,12 @@ class FolderController extends Controller
 	public function actionView($id)
 	{
         // register yii jquery plugin used for file/folder deletion
-        Yii::app()->getClientScript()->registerCoreScript('yii');
         $folder = $this->loadModel($id);
 
         if($folder->owner_id == Yii::app()->user->id || $folder->public == 1) {
+            if ($folder->folder_name == "root")
+                $this->redirect($this->createUrl('folder/'));
+                
             $files = $this->getFiles($id);
 
             $this->render('view',array(
@@ -111,7 +113,7 @@ class FolderController extends Controller
                 'files'=>$files
             ));
         } else {
-            throw new CHttpException(403,'You cannot access other users files unless they share them with you or make them public.');
+            throw new CHttpException(403,'You cannot access other users files unless they are shared with you or public.');
         }
 	}
 

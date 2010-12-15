@@ -49,7 +49,8 @@ class File extends CActiveRecord
 
         return $img_path;
     }
-
+    
+    // check if a file is public or inside a public folder
     public function isPublic($model) {
         if ($model->public == 1)
                 return true;
@@ -58,6 +59,14 @@ class File extends CActiveRecord
                 return true;
 
         return false;
+    }
+    
+    /* from http://php.net/manual/en/function.filesize.php */
+    public function format_size($size) {
+        $sizes = array(" Bytes", " KB", " MB", " GB", " TB", " PB", " EB", " ZB", " YB");
+        if ($size == 0) { return('0'); } else {
+            
+        return (round($size/pow(1024, ($i = floor(log($size, 1024)))), $i > 1 ? 2 : 0) . $sizes[$i]); }
     }
 
 	/**
@@ -70,7 +79,7 @@ class File extends CActiveRecord
 		return array(
 			array('owner_id, file_name', 'required'),
 			array('owner_id, public, created, last_edit', 'numerical', 'integerOnly'=>true),
-            array('file_size', 'numerical', 'min'=>1, 'max'=>Yii::app()->params['maxFileSize']),
+            array('file_size', 'numerical', 'max'=>Yii::app()->params['maxFileSize']),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, folder_id, owner_id, file_name, public, file_size, created, last_edit', 'safe', 'on'=>'search'),

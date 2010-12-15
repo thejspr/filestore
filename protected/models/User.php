@@ -113,12 +113,15 @@ class User extends CActiveRecord
  
     public function hash_password($password)
     {
-        return md5($this->salt.$password);
+        //return md5($this->salt.$password);
+        // use blowfish cipher instead.
+        return crypt($password, $this->salt);
     }
 
 	public function generate_salt()
 	{
-	    return uniqid('',true);
+	    // first string makes it choose the blowfish algorithm.
+	    return uniqid("$2a$07$",true);
 	}
 
 	public function beforeSave() {

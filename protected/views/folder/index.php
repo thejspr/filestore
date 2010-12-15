@@ -8,7 +8,7 @@ function loadFiles(folder_id){
             $('#folder-'+folder_id).after(data);
             $(folder_element).attr('src', 'images/folder_close.gif');
             $(folder_element).attr('alt', 'collapse');
-            alternateRowColor('tr');
+            alternateRowColor('#folder-index');
           }
         });
     } else {
@@ -17,12 +17,13 @@ function loadFiles(folder_id){
        });
        $(folder_element).attr('src', 'images/folder_open.gif');
        $(folder_element).attr('alt', 'expand');
-       alternateRowColor('tr');
+       alternateRowColor('#folder-index');
     }
 }
 
 $('document').ready(function(){
-    alternateRowColor('tr');
+    alternateRowColor('#folder-index');
+    alternateRowColor('#shared-folder-index');
 });
 </script>
 <?php
@@ -43,11 +44,15 @@ $this->menu=array(
 <? if (count($root_files) == 0 && count($folders) == 0 && count($shared_files) == 0) { ?>
     <div class="empty-page">
         You have no files or folders at the moment.<br />
-        Create new folders or upload files uding the links above.
+        Create new folders or upload files using the links above.
     </div>
 <? } else { ?>
     <? if ( (count($folders) > 0) || (count($root_files) > 0))  { ?>
-        <table class="item-list">
+        <table class="item-list" id="folder-index">
+        <thead>
+            <th>File/Folder name</th>
+            <th class="rightalign">Size</th>
+        </thead>
         <? foreach($folders as $folder){ ?>
             <tr id="folder-<?= $folder->id?>">
                 <td>
@@ -67,7 +72,7 @@ $this->menu=array(
                     <img src="<?= File::model()->getIcon($file->file_name) ?>" alt="file" />
                     <?= CHtml::link($file->file_name, $this->createUrl('file/view', array('id'=>$file->id))) ?>
                 </td>
-                <td></td>
+                <td class="rightalign"><?= File::model()->format_size($file->file_size) ?></td>
             </tr>
         <? } ?>
         </table>
@@ -75,7 +80,7 @@ $this->menu=array(
     <? if (count($shared_files) > 0) { ?>
         <br />
         <h3>Files shared with you by other users</h3>
-        <table class="item-list">
+        <table class="item-list" id="shared-folder-index">
         <?foreach ($shared_files as $file) { ?>
             <tr>
                 <td>

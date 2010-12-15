@@ -1,12 +1,12 @@
 // change row color on tables
 function alternateRowColor(selector) {
-    $(selector+':even').each(function(){
-        $(this).css("background-color", "#FFF")
-    });
-    $(selector+':odd').each(function(){
-        $(this).css("background-color", "#E6F2FF")
-    });
-
+        $(selector+' tr:even :not(th)').each(function(){
+            $(this).css("background-color", "#E6F2FF")
+        });
+        
+        $(selector+' tr:odd :not(th)').each(function(){
+            $(this).css("background-color", "#FFF")
+        });
 }
 
 // timeout for flash messages.

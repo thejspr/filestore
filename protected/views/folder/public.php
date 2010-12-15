@@ -1,13 +1,4 @@
 <script type="text/javascript">
-function alternateRowColor(selector) {
-    $(selector+':even').each(function(){
-        $(this).css("background-color", "#FFF")
-    });
-    $(selector+':odd').each(function(){
-        $(this).css("background-color", "#E6F2FF")
-    });
-}
-
 function loadFiles(folder_id){
     var folder_element = $('#expand-folder-img-'+folder_id);
     if (folder_element.attr('alt') == "expand") {
@@ -17,7 +8,7 @@ function loadFiles(folder_id){
             $('#folder-'+folder_id).after(data);
             $(folder_element).attr('src', 'images/folder_close.gif');
             $(folder_element).attr('alt', 'collapse');
-            alternateRowColor('tr');
+            alternateRowColor('#public-index');
           }
         });
     } else {
@@ -26,12 +17,12 @@ function loadFiles(folder_id){
        });
        $(folder_element).attr('src', 'images/folder_open.gif');
        $(folder_element).attr('alt', 'expand');
-       alternateRowColor('tr');
+       alternateRowColor('#public-index');
     }
 }
 
 $('document').ready(function(){
-    alternateRowColor('tr');
+    alternateRowColor('#public-index');
 });
 </script>
 <?php
@@ -39,12 +30,13 @@ if (!Yii::app()->user->isGuest) {
     $this->menu=array(
         array('label'=>'Upload File', 'url'=>array('file/create', 'public'=>1)),
     	array('label'=>'Create Folder', 'url'=>array('create', 'public'=>1)),
+    	array('label'=>'RSS Feed', 'url'=>array('folder/rss')),
+    );
+} else {
+    $this->menu=array(
+        array('label'=>'RSS Feed', 'url'=>array('folder/rss')),
     );
 }
-
-$this->menu=array(
-    array('label'=>'RSS Feed', 'url'=>array('folder/rss')),
-);
 ?>
 
 <h1>Public Files</h1>
@@ -52,10 +44,14 @@ $this->menu=array(
 <? if (count($files) == 0 && count($folders) == 0) { ?>
     <div class="empty-page">
         You have no files or folders at the moment.<br />
-        Create new folders or upload files uding the links above.
+        Create new folders or upload files using the links above.
     </div>
 <? } else { ?>
-<table class="item-list">
+<table class="item-list" id="public-index">
+    <thead>
+        <th>File/Folder name</th>
+        <th class="rightalign">Size</th>
+    </thead>
 <?
 foreach($folders as $folder){ ?>
 	<tr id="folder-<?= $folder->id?>">
@@ -77,7 +73,7 @@ foreach($files as $file){ ?>
 			<img src="<?= File::model()->getIcon($file->file_name) ?>" alt="file" />
 			<?= CHtml::link($file->file_name, $this->createUrl('file/view', array('id'=>$file->id))) ?>
 		</td>
-        <td></td>
+        <td class="rightalign"><?= File::model()->format_size($file->file_size) ?></td>
 	</tr>
 <? } ?>
 </table>

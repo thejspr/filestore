@@ -85,7 +85,7 @@ class FileController extends Controller
         if (isset($folderid))
            $model->folder_id = $folderid;
 
-        $model->file_size = 99999999999999999;
+        $model->file_size = 0;
 
         // check if the request is a POST (meaning the form has been submitted).
         if(isset($_POST['File']))
@@ -193,11 +193,18 @@ class FileController extends Controller
 			$folder_id = $file->folder_id;
             // full path to the file on disk.
             $file_on_disk = Yii::app()->params['filesPath'].Yii::app()->user->id.'/'.$file->file_name;
-            // delete the model in the database
-            $file->delete();
             // if the file exists on disk then delete it.
             if(file_exists($file_on_disk))
                 unlink ($file_on_disk);
+                
+            // delete all fileshares for this file
+            $shares = FileShare::model()->FindAll('file_id = :fid',array(':fid'=>$id));
+            foreach ($shares as $share) {
+                $share->delete();
+            }
+                        
+            // delete the model in the database
+            $file->delete();
 
             Yii::app()->user->setFlash('success', 'File successfully deleted');
 

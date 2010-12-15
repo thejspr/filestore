@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS tbl_folder (
     id int(11) NOT NULL AUTO_INCREMENT,
     owner_id int(11) NOT NULL,
     folder_name varchar(128) NOT NULL,
-    is_root tinyint(1) DEFAULT NULL,
+    is_root tinyint(1) DEFAULT 0,
     public tinyint(1) DEFAULT NULL,
     PRIMARY KEY (id),
     KEY own_ind (owner_id)

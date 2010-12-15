@@ -31,6 +31,9 @@ h3 {
     line-height:1;
     margin-bottom:1em;
 }
+.title a:hover {
+    color: #347498;
+}
 /* Various div's */
 .centered {
     margin-left: auto;
@@ -60,14 +63,29 @@ h3 {
 }
 /* other stuff */
 .item-list {
-    width: 400px;
+    margin-left: 20px;
+    width: 500px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    padding-bottom: 40px;
+}
+.item-list td {
+    padding: 2px;
+}
+.item-list th {
+    font-weight: bold;
+    border-bottom: 1px solid #000;
+}
+.rightalign {
+    text-align: right;
+    padding-right: 2px;
 }
 .item-list img {
     vertical-align:text-top;
     padding-right: 5px;
 }
 .nested {
-    padding-left:25px;
+    padding-left:26px !important;
 }
 .expand-folder img {
     float: right;
@@ -84,8 +102,9 @@ h3 {
 .dl-image {
     width: 100px;
 }
-.done {
-    text-decoration: line-through;
+#mp3-player {
+    float:right;
+    margin-right: 20px;    
 }
 /* forms */
 label {
@@ -185,7 +204,8 @@ textarea {
     vertical-align: text-top;
 }
 .profile table {
-    width: 600px;
+    margin-left: 25%;
+    width: 400px;
 }
 .v-centered {
     vertical-align: text-top;
@@ -215,6 +235,14 @@ textarea {
     font-size: 110%;
     color: #264409;
     border: 1px solid #264409;
+    border-radius: 5px;
+}
+.info {
+    padding: 8px;
+    margin: 10px;
+    font-size: 110%;
+    border: 1px solid #000090;
+    border-radius: 5px;
 }
 .fblogin {
     font-size: 75%;

@@ -103,7 +103,7 @@ class Folder extends CActiveRecord
         if($this->owner_id == Yii::app()->user->id) {
 
             // set directory path
-            $directory_path = Yii::app()->params['filesPath'].'/'.Yii::app()->user->id;
+            $directory_path = Yii::app()->params['filesPath'].Yii::app()->user->id;
 
             // get files in folder
             $files_in_folder = File::model()->findAll('folder_id = :fid', array(':fid'=>$this->id));
@@ -111,8 +111,7 @@ class Folder extends CActiveRecord
             // delete each of those files both in database and on disk
             foreach ($files_in_folder as $file) {
                 $file_path = $directory_path.'/'.$file->file_name;
-                if (is_file($file_path))
-                    unlink($file_path);
+                unlink($file_path);
                 $file->delete();
             }
         } else {

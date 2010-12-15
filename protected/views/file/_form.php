@@ -1,5 +1,5 @@
 <div class="info">
-    Maximum file size is <?= Yii::app()->params['maxFileSize'] ; ?> Bytes
+    Maximum file size is <?= File::model()->format_size(Yii::app()->params['maxFileSize']) ; ?>
 </div>
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(

@@ -1,9 +1,10 @@
 <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script><script type="text/javascript">stLight.options({publisher:'ef90a239-1e5d-4674-8319-e21f5b0a79ff'});</script>
 
 <?php
-if (!Yii::app()->user->isGuest) {
+$file_path = Yii::app()->params['filesPath'].$model->owner_id.'/'.$model->file_name;
+if (!Yii::app()->user->isGuest || $model->public == 1) {
     $menu = array();
-    $menu[] = array('label'=>'Download', 'url'=>Yii::app()->params['filesPath'].$model->owner_id.'/'.$model->file_name);
+    $menu[] = array('label'=>'Download', 'url'=>$file_path);
 
     if (Folder::model()->findByPk($model->folder_id)->public == 1)
         $menu[] = array('label'=>'Back To Folder', 'url'=>array('folder/view', 'id'=>$model->folder_id));
@@ -26,18 +27,34 @@ if (!Yii::app()->user->isGuest) {
 
 <? if ($this->isImage($model)){ ?>
     <div class="file-image">
-        <a href="<?= Yii::app()->params['filesPath'].$model->owner_id.'/'.$model->file_name?>">
-        <img src="<?= Yii::app()->params['filesPath'].$model->owner_id.'/'.$model->file_name ?>"
+        <a href="<?= $file_path ?>">
+        <img src="<?= $file_path ?>"
              alt="<?= $model->file_name ?>" title="Click to download"/>
         </a>
+    </div>
+<? } ?>
+<? if (substr($model->file_name, strlen($model->file_name)-4) == ".mp3") { ?>
+    <div id="mp3-player">
+        <p><b>Audioplayer</b></p>
+        <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="165" height="38" id="niftyPlayer1" align="">
+        <param name=movie value="niftyplayer.swf?file=betty.mp3&as=1">
+        <param name=quality value=high>
+        <param name=bgcolor value=#FFFFFF>
+        <embed src="mp3/niftyplayer.swf?file=<?= $file_path ?>&as=0" quality=high bgcolor=#FFFFFF width="165" height="38" name="niftyPlayer1" align="" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer">
+        </embed>
+        </object>
     </div>
 <? } ?>
 <b>File name:</b><br />
 <img src="<?= File::model()->getIcon($model->file_name) ?>" class="v-centered" alt="filetype" /> <?= $model->file_name; ?>
 <br />
-<b>Folder:</b><br />
-<?= CHtml::link($folder->folder_name, $this->createUrl('folder/view', array('id'=>$folder->id))); ?>
-<br />
+<? 
+$folder = Folder::model()->FindByPk($model->folder_id);
+if ($folder->public == 1 || $folder->owner_id == Yii::app()->user->id) { ?>
+    <b>Folder:</b><br />
+    <?= CHtml::link($folder->folder_name, $this->createUrl('folder/view', array('id'=>$folder->id))); ?>
+    <br />
+<? } ?>
 <b>Owner:</b><br />
 <?= CHtml::link($owner->username, $this->createUrl('user/view', array('id'=>$owner->id))); ?>
 <br />
@@ -57,7 +74,7 @@ if (!Yii::app()->user->isGuest) {
 <?= $model->public == 1 ? "Yes" : "No" ?>
 <br />
 <b>File Size:</b><br />
-<?= $model->file_size ?>
+<?= File::model()->format_size($model->file_size) ?>
 <br />
 <b>Uploaded:</b><br />
 <?= date(Yii::app()->params['time_long'],$model->created) ?>

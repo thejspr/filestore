@@ -5,10 +5,14 @@
 	<meta name="language" content="en" />
 	<title><?= $this->pageTitle ?></title>
 
-    <? Yii::app()->clientScript->registerCoreScript('jquery'); ?>
-    <? Yii::app()->clientScript->registerScriptFile('js/jquery.hint.js'); ?>
-    <? Yii::app()->clientScript->registerScriptFile('js/modernizr-1.6.min.js'); ?>
-    <? Yii::app()->clientScript->registerScriptFile('js/shared.js'); ?>
+    <? 
+        Yii::app()->clientScript->registerCoreScript('jquery');
+        Yii::app()->getClientScript()->registerCoreScript('yii');
+        Yii::app()->clientScript->registerScriptFile('js/jquery.hint.js');
+        Yii::app()->clientScript->registerScriptFile('js/modernizr-1.6.min.js');
+        Yii::app()->clientScript->registerScriptFile('js/shared.js'); 
+    ?>
+    
     <script>
         function runScript(e) {
             if (e.keyCode == 13) {
@@ -48,23 +52,20 @@
                 <img src="images/icons/magnifier.png" id="search-image" alt="Search" />
             </a>
         </div>
-        <h1><a href="<?= $this->createUrl('site/index')?>"><span style="color:#000">File</span>Storage</a></h1>
+        <h1 class="title"><a href="<?= $this->createUrl('site/index')?>"><span style="color:#000">File</span>Storage</a></h1>
         <div id="nav">
 			<ul class="clearfix">
 				<? if (!Yii::app()->user->isGuest) { ?>
-					<li class="clearfix"><?= CHtml::link('Home', array('/site/index')) ?></li>
 					<li class="clearfix"><?= CHtml::link('My Files', array('/folder/')) ?></li>
 					<li class="clearfix"><?= CHtml::link('Public Files', array('/folder/public')) ?></li>
 					<li class="clearfix"><?= CHtml::link('My Profile', array('user/view','id'=>Yii::app()->user->id)) ?></li>
-					<li class="clearfix"><?= CHtml::link('Todo List', array('site/page', 'view'=>'todo')) ?></li>
-					<li class="clearfix"><?= CHtml::link('About', array('site/page', 'view'=>'about')) ?></li>
+					<!--<li class="clearfix"><?= CHtml::link('Todo List', array('site/page', 'view'=>'todo')) ?></li>-->
 					<li class="clearfix last"><?= CHtml::link('Logout ('.Yii::app()->user->name.')', array('/site/logout')) ?></li>
 				<? } else { ?>
 					<li class="clearfix"><?= CHtml::link('Login', array('/site/login'.Yii::app()->user->id)) ?></li>
 					<li class="clearfix"><?= CHtml::link('Register', array('/user/create')) ?></li>
-                    <li class="clearfix"><?= CHtml::link('Public Files', array('/folder/public')) ?></li>
-					<li class="clearfix"><?= CHtml::link('Todo List', array('site/page', 'view'=>'todo')) ?></li>
-					<li class="clearfix last"><?= CHtml::link('About', array('site/page', 'view'=>'about')) ?></li>
+                    <li class="clearfix last"><?= CHtml::link('Public Files', array('/folder/public')) ?></li>
+					<!--<li class="clearfix"><?= CHtml::link('Todo List', array('site/page', 'view'=>'todo')) ?></li>-->
 				<? } ?>
 			</ul>
 		</div> <!-- nav -->
@@ -73,8 +74,11 @@
 	<?php echo $content; ?>
 
 	<div id="footer">
+        <span style="color:#999;font-size:85%;">
+        <?= CHtml::link('About', array('site/page', 'view'=>'about')) ?>
         &copy; <?= date('Y')?> Jesper Kjeldgaard
-        <span style="color:#999;float:right;">Yii v.<?= Yii::getVersion() ?></span>
+        <span style="float:right;">Powered by Yii <?= Yii::getVersion() ?></span>
+        </span>
 	</div><!-- footer -->
 
 </div><!-- container -->
