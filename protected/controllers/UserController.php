@@ -3,12 +3,6 @@
 class UserController extends Controller
 {
 	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
-	 */
-	public $layout='//layouts/column1';
-
-	/**
 	 * @return array action filters
 	 */
 	public function filters()
@@ -26,11 +20,11 @@ class UserController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
+			array('allow',  // allow all users to perform 'create' action (register)
 				'actions'=>array('create'),
 				'users'=>array('*'),
 			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
+			array('allow', // allow authenticated user to perform 4 actions
 				'actions'=>array('view','update','index', 'delete'),
 				'users'=>array('@'),
 			),

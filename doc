@@ -1,0 +1,1 @@
+phpdoc -d protected/controllers,protected/models -t ../doc -ti "FileStorage Documentation" -o HTML:frames:phphtmllib -dn FileStorage -q

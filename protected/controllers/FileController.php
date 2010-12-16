@@ -2,8 +2,6 @@
 
 class FileController extends Controller
 {
-	public $layout='//layouts/column1';
-
 	public function filters()
 	{
 		return array(
@@ -32,7 +30,12 @@ class FileController extends Controller
 			),
 		);
 	}
-
+    
+    /**
+     * Shows the shares for a file.
+     * The view also contains ajax for adding and deleting shares.
+     * @param integer $id the ID of the model to be displayed
+     */
     public function actionShares($id)
     {
         // fetch file model from database.
@@ -54,10 +57,13 @@ class FileController extends Controller
 	public function actionView($id)
 	{
         $model = $this->loadModel($id);
+        
         // fetch the folder model for the file model data.
         $folder = Folder::model()->findByPk($model->folder_id);
+        
         // fetch the owner (user) model for the file model data.
         $owner = User::model()->findByPk($model->owner_id);
+        
         // fetch users that the file is shared with.
         $shared = FileShare::model()->FindAll('file_id = :fid',array(':fid'=>$id));
 
@@ -73,11 +79,14 @@ class FileController extends Controller
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param integer $folderid Optional. The ID of the folder model the file should be saved in.
+     * @param integer $public Optional. Denotes whether the file should be public.
 	 */
 	public function actionCreate($folderid = null, $public = 0)
 	{
 		$model=new File;
         $model->public = $public;
+        
         // fetch all the users folders for the drop down list.
         $folders=Folder::model()->findAll('owner_id = :owner_id',array(':owner_id'=>Yii::app()->user->id));
 
@@ -229,7 +238,11 @@ class FileController extends Controller
 		return $model;
 	}
 
-    /* Checks wether a file ends with a known image extension */
+    /** 
+     * Checks wether a file ends with a known image extension.
+     * Returns Boolean
+     * @param File file model to be checked 
+     */
     public function isImage($file){
         // get the file extension.
         $extension = explode('.', $file->file_name);

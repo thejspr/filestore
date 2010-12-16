@@ -8,11 +8,6 @@ class SiteController extends Controller
 	public function actions()
 	{
 		return array(
-			// captcha action renders the CAPTCHA image displayed on the contact page
-			'captcha'=>array(
-				'class'=>'CCaptchaAction',
-				'backColor'=>0xFFFFFF,
-			),
 			// page action renders "static" pages stored under 'protected/views/site/pages'
 			// They can be accessed via: index.php?r=site/page&view=FileName
 			'page'=>array(
@@ -20,9 +15,13 @@ class SiteController extends Controller
 			),
 		);
 	}
-
+    
+    /**
+     * Performs a search query on files and folders.
+     */
     public function actionSearch($query) 
     {
+        // if the user is not authenticated, only search public files and folders
         if (Yii::app()->user->isGuest) {
             $files = File::model()->findAll('public = 1 AND file_name LIKE :query', array(':query'=>"%".$query."%"));
             $folders = Folder::model()->findAll('public = 1 AND folder_name LIKE :query', array(':query'=>"%".$query."%"));
@@ -36,7 +35,8 @@ class SiteController extends Controller
                     '(owner_id = :oid OR public = 1) AND folder_name LIKE :query',
                     array(':query'=>'%'.$query.'%',':oid'=>Yii::app()->user->id));
         }
-
+        
+        // return view with search results.
         $this->render('search', array(
             'files'=>$files,
             'folders'=>$folders,
@@ -51,6 +51,7 @@ class SiteController extends Controller
 	public function actionIndex()
 	{
         $this->pageTitle = "FileStorage - Welcome";
+
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
 		$this->render('index');
@@ -98,22 +99,31 @@ class SiteController extends Controller
 		$this->render('login',array('model'=>$model));
 	}
 
+    /**
+     * Performs the facebook login and/or registration
+     */
     public function actionFbLogin()
     {
+        // check if the facebook js is initiated.
         if (!isset(Yii::app()->params['uid']))
             throw new CHttpException(400,'An error occured during Facebook authentication. Not initialized.');
         
+        // check if there exists a model with the corresponding facebook id.
         $user = User::model()->find('fb_id = :uid',array(':uid'=>Yii::app()->params['uid']));
         
+        $password = "aosdmv394inv";
+        
+        // register a new user model if no model was found
         if ($user === null) {
+            // gets facebook information on the given facebook user.
             $fb_user = json_decode(file_get_contents('https://graph.facebook.com/me?access_token='.Yii::app()->params['access_token']));
             
             $user = new User;
             $user->scenario = 'register';
             $user->fb_id = Yii::app()->params['uid'];
             $user->username = $fb_user->name;
-            $user->password = "aosdmv394inv";
-            $user->password_confirmation = "aosdmv394inv";
+            $user->password = $password;
+            $user->password_confirmation = $password;
             $user->email = $fb_user->email;
             $user->created = time();
             $user->save();
@@ -121,22 +131,22 @@ class SiteController extends Controller
             $user->saveAttributes(array('last_login' => time(), 'login_count' => $user->login_count + 1));
         }
         
+        // used to authenticate the user.
         $model=new LoginForm;
         $model->username = $user->username;
-        $model->password = "aosdmv394inv";
+        $model->password = $user->password;
         $model->rememberMe = 0;
         
         if ($model->login()) {
             Yii::app()->user->setFlash('success', 'You have successfully logged in with Facebook.');
             $this->redirect($this->createUrl('folder/index'));
         } else {
-            var_dump($user->getErrors());
-            //throw new CHttpException(400,'An error occured during Facebook authentication.');
+            throw new CHttpException(400,'An error occured during Facebook authentication.');
         }
     }
 
 	/**
-	 * Logs out the current user and redirect to homepage.
+	 * Logs out the current user.
 	 */
 	public function actionLogout()
 	{

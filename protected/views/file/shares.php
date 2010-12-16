@@ -1,6 +1,6 @@
 <script>
     $(document).ready(function(){
-        alternateRowColor('tr');
+        alternateRowColor('#shares');
     });
 
     var getUniqueId = (function() {var id=0;return function() {if (arguments[0]==0) {id=1;return 0;} else return id++;}})();
@@ -10,7 +10,7 @@
             url: 'index.php?r=fileShare/GetForm&id=<?= $model->id?>&unique_id='+getUniqueId(),
             success: function(data) {
                 $('#shares tbody').prepend(data);
-                alternateRowColor('tr');
+                alternateRowColor('#shares');
             }
         });
     }
@@ -22,7 +22,7 @@
             success: function(data) {
                 $('#shares tbody').prepend(data);
                 $('#new-'+unique_id).remove();
-                alternateRowColor('tr');
+                alternateRowColor('#shares');
             }
         });
     }
@@ -30,7 +30,7 @@
     function cancelShare(unique_id) {
         $('#new-'+unique_id).hide('slow', function(){
             $('#new-'+unique_id).remove();
-            alternateRowColor('tr');
+            alternateRowColor('#shares');
         });
         
     }
@@ -40,7 +40,7 @@
             url: 'index.php?r=fileShare/delete&id='+id,
             success: function() {
                 $('#row-'+id).hide('slow', function(){ $('#row-'+id).remove(); });
-                alternateRowColor('tr');
+                alternateRowColor('#shares');
             }
         });
     }
