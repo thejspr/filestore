@@ -6,33 +6,29 @@ if (Yii::app()->user->id == $model->id) {
     );
 }
 ?>
-
 <h1>View Profile</h1>
 <div class="profile">
-<?php 
-if ($model->id == Yii::app()->user->id) {
-    $this->widget('zii.widgets.CDetailView', array(
-    	'data'=>$model,
-    	'attributes'=>array(
-    		'username',
-    		'email',
-    		array('label' => 'Last profile edit', 'value' => ($model->updated > 0) ? date(Yii::app()->params['time_long'], $model->updated) : "No edits performed yet."),
-    		array('label' => 'Last Login', 'value' => ($model->last_login > 0) ? date(Yii::app()->params['time_long'], $model->last_login) : "This is your first login."),
-    		'login_count',
-    		array('label' => 'Join date', 'value' => date(Yii::app()->params['time_long'], $model->created)),
-    		'failed_login_attempts'
-    	),
-    )); 
-} else {
-    $this->widget('zii.widgets.CDetailView', array(
-        'data'=>$model,
-        'attributes'=>array(
-            'username',
-            'email',
-            array('label' => 'Last Login', 'value' => ($model->last_login > 0) ? date(Yii::app()->params['time_long'], $model->last_login) : "This is your first login."),
-            array('label' => 'Join date', 'value' => date(Yii::app()->params['time_long'], $model->created)),
-        ),
-    ));
-}
-?>
+    <b>Username:</b><br />
+        <?= $model->username ?>
+    <br />
+    <b>Email:</b><br />
+        <?= $model->email ?>
+    <br />
+    <?php if ($model->id == Yii::app()->user->id) { ?>
+        <b>Last Profile Edit:</b><br />
+            <?= $model->updated ?>
+        <br />
+        <b>Last Login:</b><br />
+            <?= $model->last_login ?>
+        <br />
+        <b>Logins:</b><br />
+            <?= $model->login_count ?>
+        <br />
+        <b>Join Date:</b><br />
+            <?= $model->created ?>
+        <br />
+        <b>Failed Login Attempts:</b><br />
+            <?= $model->failed_login_attempts ?>
+        <br />
+    <? } ?>
 </div>

@@ -5,7 +5,3 @@ sudo rm -rf assets/*
 sudo chmod 777 protected/data/f
 
 cat protected/data/schema.mysql.sql | mysql -u root -p fapp
-
-if [ "$HOSTNAME" = "ub" ]; then
-    git-changelog > changelog
-fi

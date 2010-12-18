@@ -42,17 +42,12 @@ class FileShare extends CActiveRecord
 			array('id, file_id, user_id', 'safe', 'on'=>'search'),
 		);
 	}
-
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-		);
-	}
+    
+    public function afterSave()
+    {
+        // add log message
+        LogEntry::createEntry(Yii::app()->user->id, $this->file_id, "shared", $this->user_id);
+    }
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -65,24 +60,13 @@ class FileShare extends CActiveRecord
 			'user_id' => 'User',
 		);
 	}
+    
+    public function afterDelete()
+    {
+        $log_entries = LogEntry::model()->findAll('item_id = :fid AND message = "shared" AND isFolder = 0', array(':fid'=>$this->file_id));
+        foreach ($log_entries as $entry) {
+            $entry->delete();
+        }
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
-
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('id',$this->id);
-		$criteria->compare('file_id',$this->file_id);
-		$criteria->compare('user_id',$this->user_id);
-
-		return new CActiveDataProvider(get_class($this), array(
-			'criteria'=>$criteria,
-		));
-	}
 }

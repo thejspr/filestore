@@ -170,6 +170,7 @@ class FileController extends Controller
                     // rename the file: rename(old filename, new filename)
                     rename($path.$oldFileName, $path.$model->file_name);
                 }
+                
                 Yii::app()->user->setFlash('success', 'file successfully updated');
 
                 // redirect to view the updated file

@@ -1,0 +1,21 @@
+#log-container {
+    position: absolute;
+    top: 115px;
+    left: 0px;
+    width: 190px;
+}
+#log-title {
+    background-color: #347498;
+    color: #FFFFFF;
+    padding: 2px;
+    font-weight: bold;
+}
+.log-entry {
+    font-size: 80%;
+    padding-left: 2px;
+    background-color: #e5f0f6;
+    overflow: hidden;
+}
+.odd {
+    background-color: #cce2ee;
+}

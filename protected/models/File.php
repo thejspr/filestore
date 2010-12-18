@@ -131,4 +131,28 @@ class File extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+    
+    public function afterSave()
+    {
+        // add log message
+        if ($this->public == 1)
+            $reciever = 0;
+        else
+            $reciever = Yii::app()->user->id;
+        
+        if($this->isNewRecord)
+            $message = "uploaded";
+        else
+            $message = "edited";
+        
+        LogEntry::createEntry(Yii::app()->user->id, $this->id, $message, $reciever);
+    }
+    
+    public function afterDelete()
+    {
+        $log_entries = LogEntry::model()->findAll('item_id = :fid AND isFolder = 0', array(':fid'=>$this->id));
+        foreach ($log_entries as $entry) {
+            $entry->delete();
+        }
+    }
 }

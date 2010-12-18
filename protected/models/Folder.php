@@ -91,6 +91,22 @@ class Folder extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+    
+    public function afterSave()
+    {
+        // add log message
+        if ($this->public == 1)
+            $reciever = 0;
+        else
+            $reciever = Yii::app()->user->id;
+        
+        if($this->isNewRecord)
+            $message = "created";
+        else
+            $message = "edited";
+        
+        LogEntry::createEntry(Yii::app()->user->id, $this->id, $message, $reciever, true);
+    }
 
     public function hasFiles($id) {
         $files = File::model()->findAll('folder_id = :id', array(':id'=>$id));
@@ -118,5 +134,13 @@ class Folder extends CActiveRecord
             throw new CHttpException(403,'You may not delete other users folders!');
         }
 
+    }
+    
+    public function afterDelete()
+    {
+        $log_entries = LogEntry::model()->findAll('item_id = :fid AND isFolder = 1', array(':fid'=>$this->id));
+        foreach ($log_entries as $entry) {
+            $entry->delete();
+        }
     }
 }

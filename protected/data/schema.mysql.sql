@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS tbl_folder (
     public tinyint(1) DEFAULT NULL,
     PRIMARY KEY (id),
     KEY own_ind (owner_id)
-    ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 COLLATE latin1_general_ci ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 COLLATE latin1_general_ci ;
 
 
 DROP TABLE IF EXISTS tbl_file_shares;
@@ -48,6 +48,17 @@ CREATE TABLE IF NOT EXISTS tbl_file_shares (
     file_id int(11) NOT NULL,
     user_id int(11) NOT NULL,
     PRIMARY KEY (id)
-    ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE latin1_general_ci ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE latin1_general_ci ;
 
-DROP TABLE IF EXISTS tbl_folder_shares;
+DROP TABLE IF EXISTS tbl_log_entries;
+CREATE TABLE IF NOT EXISTS tbl_log_entries (
+    id int(11) NOT NULL AUTO_INCREMENT,
+    item_id int(11) NOT NULL,
+    user_id int(11) NOT NULL,
+    time int(11) DEFAULT 0,
+    message varchar(30) NOT NULL,
+    reciever int(11) NOT NULL,
+    isFolder tinyint(1) DEFAULT 0,   
+    PRIMARY KEY (id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE latin1_general_ci ;
+    

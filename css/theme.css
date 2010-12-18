@@ -1,3 +1,81 @@
+ /* reset css for consistent look in all browsers */
+html {margin:0;padding:0;border:0;}
+body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, dialog, figure, footer, header, hgroup, nav, section {margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}
+article, aside, dialog, figure, footer, header, hgroup, nav, section {display:block;}
+body {line-height:1.5;background:white;}
+table {border-collapse:separate;border-spacing:0;}
+caption, th, td {text-align:left;font-weight:normal;float:none !important;}
+table, th, td {vertical-align:middle;}
+blockquote:before, blockquote:after, q:before, q:after {content:'';}
+blockquote, q {quotes:"" "";}
+a img {border:none;}
+:focus {outline:0;}
+
+/* Layout */
+#container {
+    width:920px;
+    margin:10px auto;
+}
+#content {
+    position: relative;
+    width: 880px;
+    margin: 40px auto 0px auto;
+    min-height: 450px;
+}
+#header {
+    font-size: 1.2em;
+}
+#header h1 {
+    font-size: 180%;
+    font-weight: bold;
+    margin:0;
+    padding:0;
+}
+#nav {
+    float: right;
+    padding-top: 10px;
+}
+#nav a {
+    font-weight: normal;
+}
+#nav ul li {
+    float: left;
+    margin-right: 10px;
+    padding-right: 10px;
+    border-right: 1px solid #000;
+}
+#nav ul li a {
+    display: block;
+    padding: 1px 0;
+    color: #347498;
+    text-decoration: none;
+}
+#nav ul a:hover {
+    color: #000;
+}
+#nav ul .last {
+    border: none;
+    margin-right: 0px;
+    padding-right: 10px;
+}
+#nav ul .on a {
+    color: #000;
+    font-weight: bold;
+    cursor: default;
+}
+#nav ul .on a:hover {
+    color: #000;
+}
+.clearfix, .last, .on {
+    display: block;
+    margin-right: 0px;
+    padding-right: 0px;
+}
+#footer {
+    border-top: 1px solid #000;
+    margin-left: 20px;
+    margin-right: 20px;
+}
  /* General layout */
 body {
     font-size:95%;
@@ -211,7 +289,7 @@ textarea {
     vertical-align: text-top;
 }
 #content h1 {
-    border-bottom: 1px solid #347498;
+    border-bottom: 1px solid #000;
 }
 #loader-image {
     vertical-align: middle;
@@ -271,4 +349,13 @@ textarea {
 }
 .blur {
     color: #ccc;
+}
+#toggle_theme {
+    font-size: 75%;    
+}
+.errorSummary {
+    color: #900000;
+}
+.errorSummary ul {
+    margin-left: 30px;
 }

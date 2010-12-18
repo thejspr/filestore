@@ -1,6 +1,8 @@
-<div class="info">
-    Maximum file size is <?= File::model()->format_size(Yii::app()->params['maxFileSize']) ; ?>
-</div>
+<? if ($model->isNewRecord) : ?>
+    <div class="info">
+        Maximum file size is <?= File::model()->format_size(Yii::app()->params['maxFileSize']) ; ?>
+    </div>
+<? endif; ?>
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'file-form',
