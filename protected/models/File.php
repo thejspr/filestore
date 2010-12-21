@@ -32,6 +32,29 @@ class File extends CActiveRecord
 	{
 		return 'tbl_file';
 	}
+    
+    public function hasAccess()
+    {
+        if ($this->owner_id == Yii::app()->user->id)
+            return true;
+        
+        if ($this->public == 1)
+            return true;
+            
+        if (Folder::model()->findByPk($this->folder_id)->public == 1)
+            return true;
+        
+        $shares = FileShare::model()->findAll('file_id = :fid', array(':fid'=>$this->id));
+            
+        if (count($shares) > 0) {
+            foreach ($shares as $share) {
+                if ($share->user_id == Yii::app()->user->id)
+                    return true;
+            }
+        }
+        
+        return false;
+    }
 
     // sets the appropriate path for the file icon based on the files' extension.
     public function getIcon($file_name)
@@ -140,10 +163,11 @@ class File extends CActiveRecord
         else
             $reciever = Yii::app()->user->id;
         
-        if($this->isNewRecord)
+        if($this->isNewRecord) {
             $message = "uploaded";
-        else
+        } else {
             $message = "edited";
+        }
         
         LogEntry::createEntry(Yii::app()->user->id, $this->id, $message, $reciever);
     }

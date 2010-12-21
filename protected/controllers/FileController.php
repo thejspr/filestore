@@ -18,7 +18,7 @@ class FileController extends Controller
 	{
 		return array(
             array('allow',
-                'actions'=>array('view'),
+                'actions'=>array('view', 'get'),
                 'users'=>array('*'),
             ),
 			array('allow', // allow authenticated user to perform these actions
@@ -49,6 +49,18 @@ class FileController extends Controller
             'shares'=>$shares,
 		));
     }
+    
+    public function actionGet($id)
+    {
+        $model = $this->loadModel($id);
+        
+        if(!$model->hasAccess())
+            throw new CHttpException(500,'Access Denied. File is neither public or shared with you.');
+        
+        $this->render('get',array(
+            'model'=>$model
+        ));
+    }
 
 	/**
 	 * Displays a particular model.
@@ -58,6 +70,9 @@ class FileController extends Controller
 	{
         $model = $this->loadModel($id);
         
+	    if(!$model->hasAccess())
+            throw new CHttpException(500,'Access Denied. File is neither public or shared with you.');
+        
         // fetch the folder model for the file model data.
         $folder = Folder::model()->findByPk($model->folder_id);
         
@@ -66,7 +81,7 @@ class FileController extends Controller
         
         // fetch users that the file is shared with.
         $shared = FileShare::model()->FindAll('file_id = :fid',array(':fid'=>$id));
-
+       
         //render the view with the fetched data.
         $this->render('view',array(
 			'model'=>$model,
@@ -111,20 +126,29 @@ class FileController extends Controller
             $model->folder_id = $_POST['File']['folder_id'];
 			$path = Yii::app()->params['filesPath'].'/'.Yii::app()->user->id.'/';
             
-            // check if the file sieze is within the limit
+            // check if the file size is within the limit
             if(isset($_SERVER['CONTENT_LENGTH']) && $_SERVER['CONTENT_LENGTH'] > Yii::app()->params['maxFileSize']) {
                 $model->file_size = $_SERVER['CONTENT_LENGTH'];
             } else if (isset($file->size)) {
                 $model->file_size = $file->size;
             }
+            
             $model->created = time();
             
+            $user = User::model()->findByPk($model->owner_id);
+            
             // save the model and save the actual file into the users folder.
-            if($model->save()) {
+            if(($user->storage_left - $model->file_size > 0) && $model->save()) {
                 $file->saveAs($path.$model->file_name);
+                
+                $user->saveAttributes(array('storage_left' => $user->storage_left - $model->file_size));
 
-                Yii::app()->user->setFlash('success', 'file successfully uploaded');
+                //Yii::app()->user->setFlash('success', 'file successfully uploaded');
                 $this->redirect(array('view','id'=>$model->id));
+            } else {
+                $space_left = File::model()->format_size($user->storage_left);
+                $model->addError('file_size', 
+                    "Not enough storage space left. Delete some files to free up more space.\n You have $space_left left.");
             }
 		}
 
@@ -171,7 +195,7 @@ class FileController extends Controller
                     rename($path.$oldFileName, $path.$model->file_name);
                 }
                 
-                Yii::app()->user->setFlash('success', 'file successfully updated');
+                //Yii::app()->user->setFlash('success', 'file successfully updated');
 
                 // redirect to view the updated file
                 $this->redirect(array('view','id'=>$model->id));
@@ -212,11 +236,15 @@ class FileController extends Controller
             foreach ($shares as $share) {
                 $share->delete();
             }
+            
+            // add file size to storage space again.
+            $user = User::model()->findByPk($file->owner_id);
+            $user->saveAttributes(array('storage_left' => $user->storage_left + $file->file_size));
                         
             // delete the model in the database
             $file->delete();
 
-            Yii::app()->user->setFlash('success', 'File successfully deleted');
+            //Yii::app()->user->setFlash('success', 'File successfully deleted');
 
             // redirect to the folder in which the deleted file was stored.
 			$this->redirect($this->createUrl('folder/view',array('id'=>$folder_id)));

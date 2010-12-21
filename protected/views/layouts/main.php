@@ -3,6 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="language" content="en" />
+	<link REL="SHORTCUT ICON" HREF="images/favicon.ico">
 	<title><?= $this->pageTitle ?></title>
 
     <? 

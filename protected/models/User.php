@@ -3,12 +3,6 @@
 /**
  * This is the model class for table "tbl_user".
  *
- * The followings are the available columns in table 'tbl_user':
- * @property integer $id
- * @property string $username
- * @property string $password
- * @property string $email
- *
  * The followings are the available model relations:
  */
 class User extends CActiveRecord
@@ -81,6 +75,7 @@ class User extends CActiveRecord
 			'email' => 'Email',
 			'created' => 'Joined',
 			'updated' => 'Last edit',
+			'storage_left' => 'Storage Space Left',
 			'last_login' => 'Last login',
 			'login_count' => 'Login count',
 			'failed_login_attempts' => 'Failed login attempts',

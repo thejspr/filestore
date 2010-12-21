@@ -1,10 +1,9 @@
 <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script><script type="text/javascript">stLight.options({publisher:'ef90a239-1e5d-4674-8319-e21f5b0a79ff'});</script>
 
 <?php
-$file_path = Yii::app()->params['filesPath'].$model->owner_id.'/'.$model->file_name;
 if (!Yii::app()->user->isGuest || $model->public == 1) {
     $menu = array();
-    $menu[] = array('label'=>'Download', 'url'=>$file_path);
+    $menu[] = array('label'=>'Download', 'url'=>array('file/get', 'id'=>$model->id));
 
     if (Folder::model()->findByPk($model->folder_id)->public == 1)
         $menu[] = array('label'=>'Back To Folder', 'url'=>array('folder/view', 'id'=>$model->folder_id));
@@ -26,8 +25,9 @@ if (!Yii::app()->user->isGuest || $model->public == 1) {
 <?php endif; ?>
 
 <? if ($this->isImage($model)){ ?>
+    <? $file_path = Yii::app()->params['filesPath'].$model->owner_id.'/'.$model->file_name; ?>
     <div class="file-image">
-        <a href="<?= $file_path ?>">
+        <a href="<?= $this->createUrl('file/get', array('id'=>$model->id)) ?>">
         <img src="<?= $file_path ?>"
              alt="<?= $model->file_name ?>" title="Click to download"/>
         </a>

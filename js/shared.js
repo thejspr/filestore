@@ -21,15 +21,19 @@ function alternateRowColor(selector) {
 function toggleTheme() {
     var bg_cookie = $.cookie('fs_bg_cookie');
     
+    var newTheme;
+    
     if (bg_cookie != undefined) {
-        var newTheme;
         if (bg_cookie == 0)
             newTheme = 1;
         else
-            newTheme = 0
+            newTheme = 0;
             
-        changeTheme(newTheme);
+    } else {
+        newTheme = 1;
     }
+    
+    changeTheme(newTheme);
 }
 
 function changeTheme(theme) {

@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS tbl_user (
     email varchar(128) NOT NULL,
     created int(11) DEFAULT NULL,
     updated int(11) DEFAULT 0,
+    storage_left int(11) DEFAULT 104857600,
     last_login int(11) DEFAULT 0,
     login_count int(11) DEFAULT 0,
     failed_login_attempts int(11) DEFAULT 0,

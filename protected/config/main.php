@@ -35,6 +35,9 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
+		'file'=>array(
+            'class'=>'application.ext.cfile.CFile',
+        ),
 		'urlManager'=>array(
 			'urlFormat'=>'get',
 			'showScriptName'=>true,

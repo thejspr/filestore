@@ -15,17 +15,20 @@ if (Yii::app()->user->id == $model->id) {
         <?= $model->email ?>
     <br />
     <?php if ($model->id == Yii::app()->user->id) { ?>
+        <b>Free Storage Space:</b><br />
+            <?= File::model()->format_size($model->storage_left) ?> of 100MB
+        <br />
         <b>Last Profile Edit:</b><br />
-            <?= $model->updated ?>
+            <?= date(Yii::app()->params['time_long'],$model->updated) ?>
         <br />
         <b>Last Login:</b><br />
-            <?= $model->last_login ?>
+            <?= date(Yii::app()->params['time_long'],$model->last_login) ?>
         <br />
         <b>Logins:</b><br />
             <?= $model->login_count ?>
         <br />
         <b>Join Date:</b><br />
-            <?= $model->created ?>
+            <?= date(Yii::app()->params['time_long'],$model->created) ?>
         <br />
         <b>Failed Login Attempts:</b><br />
             <?= $model->failed_login_attempts ?>

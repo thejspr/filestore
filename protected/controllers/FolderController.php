@@ -126,7 +126,7 @@ class FolderController extends Controller
 			$model->owner_id = Yii::app()->user->id;
 			
 			if($model->save()) {
-                Yii::app()->user->setFlash('success', 'Folder successfully created');
+                //Yii::app()->user->setFlash('success', 'Folder successfully created');
 				$this->redirect(array('view','id'=>$model->id));
             }
 		}
@@ -152,7 +152,7 @@ class FolderController extends Controller
 		{
 			$model->attributes=$_POST['Folder'];
 			if($model->save()) {
-                Yii::app()->user->setFlash('success', 'Folder successfully updated');
+                //Yii::app()->user->setFlash('success', 'Folder successfully updated');
 				$this->redirect(array('view','id'=>$model->id));
             }
 		}
@@ -177,7 +177,7 @@ class FolderController extends Controller
             $folder->deleteOnDisk();
             // remove model from database
             $folder->delete();
-			Yii::app()->user->setFlash('success', 'Folder successfully deleted');
+			//Yii::app()->user->setFlash('success', 'Folder successfully deleted');
 			$this->redirect($this->createUrl('folder/'));
 		}
 		else
