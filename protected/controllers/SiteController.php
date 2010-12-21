@@ -138,7 +138,7 @@ class SiteController extends Controller
         // used to authenticate the user.
         $model=new LoginForm;
         $model->username = $user->username;
-        $model->password = $user->password;
+        $model->password = $password;
         $model->rememberMe = 0;
         
         if ($model->login()) {
