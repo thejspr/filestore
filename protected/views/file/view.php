@@ -34,6 +34,7 @@ if (!Yii::app()->user->isGuest || $model->public == 1) {
     </div>
 <? } ?>
 <? if (substr($model->file_name, strlen($model->file_name)-4) == ".mp3") { ?>
+   <? $file_path = Yii::app()->params['filesPath'].$model->owner_id.'/'.$model->file_name ?>
     <div id="mp3-player">
         <p><b>Audioplayer</b></p>
         <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="165" height="38" id="niftyPlayer1" align="">
