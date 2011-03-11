@@ -21,7 +21,7 @@ return array(
 	'modules'=>array(
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
-			'password'=>'dev123',
+			'password'=>'',
 		),
 	),
    'behaviors' => array(
@@ -57,8 +57,8 @@ return array(
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=fapp',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => 'dev123',
+			'username' => '',
+			'password' => '',
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(
@@ -86,13 +86,13 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
-	    'admin_email'=>'jkjeldgaard@gmail.com',
+	    'admin_email'=>',
 		'filesPath'=>'protected/data/f/',
         'maxFileSize'=> 1048576 * ini_get('upload_max_filesize'),
 		'time_long'=>'d-m-Y h:i',
 		'fb'=> 1,
-		'fb_appid' => '123271937729319',
-		'fb_api'=>'b180e217926135292c10800d9c27045f',
-		'fb_sec'=>'404e64224550947da719f55f90070e50',
+		'fb_appid' => '',
+		'fb_api'=>'',
+		'fb_sec'=>'',
 	),
 );
